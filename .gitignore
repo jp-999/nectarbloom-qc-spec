@@ -1,6 +1,9 @@
-# Publish ONLY QC_Spec_Doc.html — ignore everything else in this folder.
-# (whitelist approach: ignore all, then re-include the file we want)
+# Publish only the QC Spec website files; everything else stays local.
+# (whitelist: ignore everything, then re-include exactly what gets served)
 *
 !.gitignore
-!QC_Spec_Doc.html
 !index.html
+!QC-spec webite/
+QC-spec webite/*
+!QC-spec webite/index.html
+!QC-spec webite/QC_Spec_Doc.html
