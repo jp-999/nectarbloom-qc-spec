@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nectarbloom (Ultra Evals) — QC Specification</title>
+<style>
+
+  :root {
+    --bg: #f5f4fb;
+    --panel: #ffffff;
+    --ink: #1c1833;
+    --muted: #645b77;
+    --line: #e7e4f0;
+    --brand: #7c3aed;
+    --brand-2: #a855f7;
+    --brand-ring: rgba(124,58,237,.18);
+    --brand-glow: rgba(124,58,237,.28);
+    --fail-bg: #fdecec; --fail-line: #d64550; --fail-ink: #8a1f2b;
+    --warn-bg: #fef6e0; --warn-line: #e0a90b; --warn-ink: #8a6300;
+    --pass-bg: #e8f5ec; --pass-line: #2f9e57; --pass-ink: #1c6b3c;
+    --shadow: 0 1px 2px rgba(30,20,60,.06), 0 8px 24px rgba(30,20,60,.07);
+    --thead-bg: #f1eefb;
+    --h12-bg: #fdecec; --h34-bg: #fef6e0; --h5-bg: #e8f5ec;
+    --toolbar-bg: rgba(245,244,251,.92);
+    --hover: #faf8ff;
+    --input-bg: #ffffff;
+    --chip-bg: #ffffff;
+    --notes-ink: #3b3550;
+    --notes-strong: #241f3a;
+    --empty-ink: #bdb7ce;
+    --hero-sub: #ece7ff;
+    --hero-grad: linear-gradient(120deg, #2a0f54 0%, #6d28d9 48%, #a855f7 100%);
+    --hero-tile: rgba(255,255,255,.14);
+    --hero-tile-line: rgba(255,255,255,.26);
+    --hero-grid: rgba(255,255,255,.07);
+  }
+  html[data-theme="dark"] {
+    --bg: #0e0f1a;
+    --panel: #171826;
+    --ink: #e9e7f5;
+    --muted: #9b94b4;
+    --line: #272637;
+    --brand: #a78bfa;
+    --brand-2: #c4b5fd;
+    --brand-ring: rgba(167,139,250,.25);
+    --brand-glow: rgba(167,139,250,.30);
+    --fail-bg: rgba(214,69,80,.16); --fail-line: #e26770; --fail-ink: #ffb9bd;
+    --warn-bg: rgba(224,169,11,.16); --warn-line: #e4ba42; --warn-ink: #ffdd93;
+    --pass-bg: rgba(47,158,87,.18); --pass-line: #49c67d; --pass-ink: #9ee9bb;
+    --shadow: 0 1px 2px rgba(0,0,0,.5), 0 10px 30px rgba(0,0,0,.4);
+    --thead-bg: #1d1d2e;
+    --h12-bg: rgba(214,69,80,.15); --h34-bg: rgba(224,169,11,.15); --h5-bg: rgba(47,158,87,.16);
+    --toolbar-bg: rgba(14,15,26,.86);
+    --hover: #1d1e2f;
+    --input-bg: #12121f;
+    --chip-bg: #1b1b2a;
+    --notes-ink: #c4bed8;
+    --notes-strong: #ece9f8;
+    --empty-ink: #565070;
+    --hero-sub: #ece7ff;
+    --hero-grad: linear-gradient(120deg, #1e0b3d 0%, #5b21b6 48%, #7c3aed 100%);
+    --hero-tile: rgba(255,255,255,.12);
+    --hero-tile-line: rgba(255,255,255,.22);
+    --hero-grid: rgba(255,255,255,.06);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  }
+  a { color: var(--brand); }
+
+  header.top {
+    position: relative; overflow: hidden; color: #fff;
+    background: var(--hero-grad); padding: 30px 32px 32px;
+  }
+  header.top::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background:
+      linear-gradient(var(--hero-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--hero-grid) 1px, transparent 1px);
+    background-size: 44px 44px, 44px 44px;
+    -webkit-mask-image: radial-gradient(120% 120% at 100% 0, #000 30%, transparent 75%);
+            mask-image: radial-gradient(120% 120% at 100% 0, #000 30%, transparent 75%);
+  }
+  header.top::after {
+    content: ""; position: absolute; right: -120px; bottom: -160px; width: 420px; height: 420px;
+    pointer-events: none; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,.18), transparent 62%);
+  }
+  .top-inner {
+    position: relative; z-index: 1; max-width: 1500px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between; gap: 22px; flex-wrap: wrap;
+  }
+  .brand { display: flex; align-items: center; gap: 16px; min-width: 0; }
+  .logo {
+    flex: none; width: 52px; height: 52px; border-radius: 15px;
+    display: grid; place-items: center; font-weight: 800; font-size: 19px; letter-spacing: .01em;
+    background: var(--hero-tile); border: 1px solid var(--hero-tile-line);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 8px 20px rgba(20,8,50,.25);
+    -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+  }
+  .brand-text { min-width: 0; }
+  .hero-title {
+    margin: 0; font-weight: 800; line-height: 1; letter-spacing: -.02em;
+    font-size: clamp(28px, 4vw, 46px);
+  }
+  .hero-sub {
+    margin: 7px 0 0; font-weight: 600; color: var(--hero-sub);
+    font-size: clamp(12px, 1.4vw, 14px); letter-spacing: .02em;
+  }
+  .hero-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+  .hero-row { display: flex; align-items: center; gap: 10px; }
+  .theme-toggle {
+    width: 38px; height: 38px; border-radius: 11px; cursor: pointer; color: #fff;
+    display: grid; place-items: center;
+    background: var(--hero-tile); border: 1px solid var(--hero-tile-line);
+    transition: background .18s, transform .18s;
+  }
+  .theme-toggle:hover { background: rgba(255,255,255,.24); transform: translateY(-1px); }
+  .theme-toggle svg { display: none; }
+  html[data-theme="light"] .theme-toggle .i-moon { display: block; }
+  html[data-theme="dark"]  .theme-toggle .i-sun  { display: block; }
+  .updated {
+    display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
+    padding: 6px 12px 6px 11px; border-radius: 999px;
+    background: var(--hero-tile); border: 1px solid var(--hero-tile-line);
+    color: #f3efff; font-size: 12px; font-weight: 600;
+  }
+  .live-dot {
+    width: 9px; height: 9px; border-radius: 50%; background: #34e08a; flex: none;
+    box-shadow: 0 0 0 0 rgba(52,224,138,.7); animation: pulse 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(52,224,138,.65); opacity: 1; }
+    70%  { box-shadow: 0 0 0 8px rgba(52,224,138,0); opacity: .45; }
+    100% { box-shadow: 0 0 0 0 rgba(52,224,138,0); opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) { .live-dot { animation: none; } }
+  .stats { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+  .stat {
+    display: inline-flex; align-items: baseline; gap: 5px;
+    padding: 6px 12px; border-radius: 10px;
+    background: var(--hero-tile); border: 1px solid var(--hero-tile-line); color: #f3efff;
+    font-size: 12px; font-weight: 600;
+  }
+  .stat strong { font-size: 15px; font-weight: 800; color: #fff; }
+  @media (max-width: 760px) {
+    .top-inner { align-items: flex-start; }
+    .hero-meta { align-items: flex-start; width: 100%; }
+    .stats { justify-content: flex-start; }
+  }
+
+  .toolbar {
+    position: sticky; top: 0; z-index: 30; background: var(--toolbar-bg);
+    backdrop-filter: saturate(1.4) blur(8px); border-bottom: 1px solid var(--line);
+    padding: 12px 24px;
+  }
+  .toolbar-inner { max-width: 1500px; margin: 0 auto; display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  .search { flex: 1 1 280px; position: relative; min-width: 220px; }
+  .search input {
+    width: 100%; padding: 10px 14px 10px 38px; border: 1px solid var(--line);
+    border-radius: 10px; font-size: 14px; background: var(--input-bg); color: var(--ink);
+    outline: none; transition: border-color .18s, box-shadow .18s;
+  }
+  .search input:focus { border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-ring); }
+  .search svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); opacity: .5; }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip-btn {
+    border: 1px solid var(--line); background: var(--chip-bg); color: var(--muted);
+    padding: 8px 14px; border-radius: 999px; font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: all .16s ease;
+  }
+  .chip-btn:hover { border-color: var(--brand); color: var(--brand); }
+  .chip-btn.active { background: var(--brand); border-color: var(--brand); color: #fff; box-shadow: 0 4px 12px var(--brand-glow); }
+  .legend { display: flex; gap: 14px; flex-wrap: wrap; margin-left: auto; align-items: center; font-size: 12.5px; color: var(--muted); }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .dot { width: 12px; height: 12px; border-radius: 4px; display: inline-block; }
+  .dot.fail { background: var(--fail-line); }
+  .dot.warn { background: var(--warn-line); }
+  .dot.pass { background: var(--pass-line); }
+
+  main { max-width: 1500px; margin: 22px auto 60px; padding: 0 24px; }
+  .count { color: var(--muted); font-size: 13px; margin: 0 0 12px; }
+
+  .table-wrap { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); }
+  table { width: 100%; border-collapse: collapse; }
+  thead th {
+    position: sticky; top: var(--thead-top, 64px); z-index: 15; text-align: left; font-size: 12px;
+    letter-spacing: .04em; text-transform: uppercase; color: var(--muted);
+    background: var(--thead-bg); padding: 12px 14px; border-bottom: 1px solid var(--line); white-space: nowrap;
+  }
+  thead th:first-child { border-top-left-radius: 14px; }
+  thead th:last-child { border-top-right-radius: 14px; }
+  thead th.h12 { background: var(--h12-bg); color: var(--fail-ink); }
+  thead th.h34 { background: var(--h34-bg); color: var(--warn-ink); }
+  thead th.h5  { background: var(--h5-bg); color: var(--pass-ink); }
+  tbody td { padding: 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tbody tr { transition: background .14s ease; }
+  tbody tr:hover { background: var(--hover); }
+  tbody tr:last-child td { border-bottom: none; }
+
+  .c-dim { width: 132px; }
+  .c-sub { width: 190px; }
+  .c-notes { width: 30%; min-width: 260px; }
+  .c-opts { width: 17%; min-width: 210px; }
+
+  .badge { display: inline-block; padding: 4px 11px; border-radius: 999px; font-size: 12px; font-weight: 700; color: #fff; white-space: nowrap; }
+  .fam-prompt { background: #7c3aed; }
+  .fam-user-input { background: #0d9488; }
+  .fam-conversation { background: #e11d6b; }
+  .fam-rubric-criteria { background: #4f46e5; }
+  .fam-rating { background: #0891b2; }
+  .fam-rubrics { background: #c026d3; }
+  .fam-all-cb-generated-content { background: #64748b; }
+
+  .sub-title { font-weight: 700; font-size: 14.5px; color: var(--ink); }
+  .qtext { margin-top: 5px; font-size: 12.5px; color: var(--muted); font-style: italic; }
+  .notes-body { font-size: 13px; color: var(--notes-ink); }
+  .note-para { margin: 0 0 11px; }
+  .note-para:last-child { margin-bottom: 0; }
+  .note-line { white-space: pre-wrap; }
+  .note-line + .note-line { margin-top: 3px; }
+  .note-list { margin: 7px 0; }
+  .note-li { white-space: pre-wrap; padding-left: 18px; text-indent: -12px; margin: 4px 0; }
+  .notes-body strong { font-weight: 700; color: var(--notes-strong); letter-spacing: .01em; }
+  .empty { color: var(--empty-ink); }
+
+  .opt {
+    position: relative; border-radius: 10px; padding: 10px 12px 10px 14px; margin-bottom: 9px;
+    border: 1px solid transparent; border-left-width: 4px; font-size: 12.7px;
+  }
+  .opt:last-child { margin-bottom: 0; }
+  .opt .opt-text { white-space: pre-wrap; }
+  .opt .opt-label { font-weight: 800; }
+  .opt .chip {
+    display: inline-flex; align-items: center; justify-content: center; float: right;
+    min-width: 22px; height: 22px; padding: 0 6px; margin: 0 0 4px 8px; border-radius: 6px;
+    font-weight: 800; font-size: 11.5px; color: #fff;
+  }
+  .opt.fail { background: var(--fail-bg); border-color: var(--fail-line); color: var(--fail-ink); }
+  .opt.fail .chip { background: var(--fail-line); }
+  .opt.warn { background: var(--warn-bg); border-color: var(--warn-line); color: var(--warn-ink); }
+  .opt.warn .chip { background: var(--warn-line); }
+  .opt.pass { background: var(--pass-bg); border-color: var(--pass-line); color: var(--pass-ink); }
+  .opt.pass .chip { background: var(--pass-line); }
+
+  .no-results { display: none; padding: 40px; text-align: center; color: var(--muted); }
+
+  .tbody { animation: fade .4s ease both; }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
+  @media (max-width: 980px) {
+    thead { display: none; }
+    table, tbody, tr, td { display: block; width: 100%; }
+    tbody tr { border: 1px solid var(--line); border-radius: 12px; margin: 14px; box-shadow: var(--shadow); overflow: hidden; }
+    tbody tr:hover { background: var(--panel); }
+    tbody td { border-bottom: 1px solid var(--line); padding: 12px 14px; }
+    tbody td:last-child { border-bottom: none; }
+    td[data-label]::before {
+      content: attr(data-label); display: block; font-size: 11px; font-weight: 700;
+      letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin-bottom: 7px;
+    }
+    .c-dim, .c-sub, .c-notes, .c-opts { width: auto; min-width: 0; }
+    .col-12[data-label]::before { color: var(--fail-ink); }
+    .col-34[data-label]::before { color: var(--warn-ink); }
+    .col-5[data-label]::before { color: var(--pass-ink); }
+    .toolbar { position: static; }
+    thead th { top: 0; }
+  }
+  @media (max-width: 620px) {
+    header.top { padding: 22px 16px; }
+    .toolbar, main { padding-left: 14px; padding-right: 14px; }
+    .legend { margin-left: 0; }
+  }
+
+</style>
+<script>
+(function(){try{var s=localStorage.getItem('qc-theme');var d=s||((window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');document.documentElement.setAttribute('data-theme',d);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();
+</script>
+</head>
+<body>
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">
+      <div class="logo">NB</div>
+      <div class="brand-text">
+        <h1 class="hero-title">Nectarbloom</h1>
+        <div class="hero-sub">QC Spec Doc · Ultra Evals</div>
+      </div>
+    </div>
+    <div class="hero-meta">
+      <div class="hero-row">
+        <div class="updated"><span class="live-dot"></span><span id="lastUpdated">Last updated on Oct 23, 2026</span></div>
+        <button class="theme-toggle" id="themeToggle" type="button" title="Toggle light / dark" aria-label="Toggle light / dark">
+          <svg class="i-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          <svg class="i-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+      </div>
+      <div class="stats">
+        <span class="stat"><strong>19</strong> Dimensions</span>
+        <span class="stat"><strong>7</strong> Families</span>
+        <span class="stat"><strong>52</strong> Options</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="toolbar-inner">
+    <div class="search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input id="q" type="search" placeholder="Search dimensions, notes, ratings&hellip;" autocomplete="off">
+    </div>
+    <div class="chips" id="chips"></div>
+    <div class="legend">
+      <span><i class="dot fail"></i>Fail &middot; 2</span>
+      <span><i class="dot warn"></i>Non-Fail &middot; 3</span>
+      <span><i class="dot pass"></i>No Issues &middot; 5</span>
+    </div>
+  </div>
+</div>
+
+<main>
+  <p class="count" id="count"></p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="c-dim">Dimension</th>
+          <th class="c-sub">Sub-Dimension</th>
+          <th class="c-notes">Notes for Auditors</th>
+          <th class="c-opts h12">Fail &middot; 2</th>
+          <th class="c-opts h34">Non-Fail &middot; 3</th>
+          <th class="c-opts h5">No Issues &middot; 5</th>
+        </tr>
+      </thead>
+      <tbody class="tbody">
+    <tr class="row" data-fam="prompt" data-search="prompt domain relevance rate the domain relevance of the prompt dimension. apply to the assigned critical user journey (cuj) in task. for all options except the last, apply an error category. [fail - domain relevance prompt] the prompt contains egregious cuj misalignment [non-fail - domain relevance] the prompt(s) contain cuj misalignment, either the prompt is not related to the cuj, or it is loosely connected. [no issues] the prompt(s) are clearly related to the assigned domain.">
+      <td class="c-dim" data-label="Dimension"><span class="badge fam-prompt">Prompt</span></td>
+      <td class="c-sub" data-label="Sub-Dimension"><div class="sub-title">Domain Relevance</div><div class="qtext">Rate the Domain Relevance of the Prompt dimension.</div></td>
+      <td class="c-notes" data-label="Notes for Auditors"><div class="notes-body"><div class="note-para"><div class="note-line">Apply to the assigned Critical User Journey (CUJ) in task.  For all options except the last, apply an error category.</div></div></div></td>
+      <td class="c-opts col-12" data-label="Fail &middot; 2"><div class="opt fail"><span class="chip">2</span><span class="opt-text"><strong class="opt-label">[Fail - Domain Relevance Prompt]</strong> The prompt contains egregious CUJ misalignment</span></div></td>
+      <td class="c-opts col-34" data-label="Non-Fail &middot; 3"><div class="opt warn"><span class="chip">3</span><span class="opt-text"><strong class="opt-label">[Non-Fail - Domain Relevance]</strong> The prompt(s) contain CUJ misalignment, either the prompt is not related to the CUJ, or it is loosely connected.</span></div></td>
+      <td class="c-opts col-5" data-label="No Issues &middot; 5"><div class="opt pass"><span class="chip">5</span><span class="opt-text"><strong class="opt-label">[No Issues]</strong> The Prompt(s) are clearly related to the assigned domain.</span></div></td>
+    </tr>
+    <tr class="row" data-fam="prompt" data-search="prompt reasoning requirement rate the reasoning requirement of the prompt dimension. . for all options except the last, apply an error category. [fail - reasoning requirement prompt] the prompt only requires factual lookup or definition; there is no reasoning at all in the prompt. [non-fail - reasoning requirement prompt] the prompt loosely or trivially includes the skills and/or reasoning of the assigned domain/level of expertise. the prompt requires reasoning in-line with the assigned domain/expertise level, beyond just simple recall">
+      <td class="c-dim" data-label="Dimension"><span class="badge fam-prompt">Prompt</span></td>
+      <td class="c-sub" data-label="Sub-Dimension"><div class="sub-title">Reasoning Requirement</div><div class="qtext">Rate the Reasoning Requirement of the Prompt dimension.</div></td>
+      <td class="c-notes" data-label="Notes for Auditors"><div class="notes-body"><div class="note-para"><div class="note-line">.  For all options except the last, apply an error category.</div></div></div></td>
+      <td class="c-opts col-12" data-label="Fail &middot; 2"><div class="opt fail"><span class="chip">2</span><span class="opt-text"><strong class="opt-label">[Fail - Reasoning Requirement Prompt]</strong> The prompt only requires factual lookup or definition; there is no reasoning at all in the prompt.</span></div></td>
+      <td class="c-opts col-34" data-label="Non-Fail &middot; 3"><div class="opt warn"><span class="chip">3</span><span class="opt-text"><strong class="opt-label">[Non-Fail - Reasoning Requirement Prompt]</strong> The prompt loosely or trivially includes the skills and/or reasoning of the assigned domain/level of expertise.</span></div></td>
+      <td class="c-opts col-5" data-label="No Issues &middot; 5"><div class="opt pass"><span class="chip">5</span><span class="opt-text">The prompt requires reasoning in-line with the assigned domain/expertise level, beyond just simple recall</span></div></td>
+    </tr>
+    <tr class="row" data-fam="prompt" data-search="prompt constraints rate the constraints of the prompt dimension. . for all options except the last, apply the error category. [fail - bad constraints] constraints feel clearly unrealistic or contrived based on the provided context, do not believe that a real user would add these constraints (e.g., sort these books by alphabetical order according to the 2nd letter of the title) | constraints are clearly unrealistically stacked (e.g., 3 or more formatting constraints) [non-fail - bad constraints] constraints are pretty basic or may be overused (e.g., keep it brief / i’m in a hurry, explain it to a child, formatting based constraints) | subjective constraints, where it’s believable that somebody in this situation of the prompt may find the constraint useful. any constraints feel natural and are what a real user asking this question to a chatbot would want">
+      <td class="c-dim" data-label="Dimension"><span class="badge fam-prompt">Prompt</span></td>
+      <td class="c-sub" data-label="Sub-Dimension"><div class="sub-title">Constraints</div><div class="qtext">Rate the Constraints of the Prompt dimension.</div></td>
+      <td class="c-notes" data-label="Notes for Auditors"><div class="notes-body"><div class="note-para"><div class="note-line">.  For all options except the last, apply the error category.</div></div></div></td>
+      <td class="c-opts col-12" data-label="Fail &middot; 2"><div class="opt fail"><span class="chip">2</span><span class="opt-text"><strong class="opt-label">[Fail - Bad Constraints]</strong> Constraints feel clearly unrealistic or contrived based on the provided context, do not believe that a real user would add these constraints (e.g., sort these books by alphabetical order according to the 2nd letter of the title)
+Constraints are clearly unrealistically stacked (e.g., 3 or more formatting constraints)</span></div></td>
+      <td class="c-opts col-34" data-label="Non-Fail &middot; 3"><div class="opt warn"><span class="chip">3</span><span class="opt-text"><strong class="opt-label">[Non-Fail - Bad Constraints]</strong> Constraints are pretty basic or may be overused (e.g., keep it brief / I’m in a hurry, explain it to a child, formatting based constraints)
+Subjective constraints, where it’s believable that somebody in this situation of the prompt may find the constraint useful.</span></div></td>
+      <td class="c-opts col-5" data-label="No Issues &middot; 5"><div class="opt pass"><span class="chip">5</span><span class="opt-text">Any constraints feel natural and are what a real user asking this question to a chatbot would want</span></div></td>
+    </tr>
+    <tr class="row" data-fam="prompt" data-search="prompt llm usage rate the llm usage of the prompt dimension. prompts should be natural and not llm-written. check each user prompt. the 4 ai tools to check: https://www.zerogpt.com/ https://gptzero.me/ https://quillbot.com/docs/new?mode=ai-detector https://www.humanizeai.pro/detector since these checkers can sometimes be noisy and have false positives, the threshold for something being ai-written is ≥80%. for all options except the last, apply the error category. [non-fail - prompt llm usage] any of the 4 checkers flag the prompt as being heavily ai-written (≥ 80% threshold) the prompt is not flagged at ≥ 80% for ai usage">
+      <td class="c-dim" data-label="Dimension"><span class="badge fam-prompt">Prompt</span></td>
+      <td class="c-sub" data-label="Sub-Dimension"><div class="sub-title">LLM Usage</div><div class="qtext">Rate the LLM Usage of the Prompt dimension.</div></td>
+      <td class="c-notes" data-label="Notes for Auditors"><div class="notes-body"><div class="note-para"><div class="note-line">Prompts should be natural and not LLM-written. Check EACH user prompt.</div></div><div class="note-para"><div class="note-line">The 4 AI tools to check:</div><div class="note-line"><a href="https://www.zerogpt.com/" target="_blank" rel="noopener">https://www.zerogpt.com/</a></div><div class="note-line"><a href="https://gptzero.me/" target="_blank" rel="noopener">https://gptzero.me/</a></div><div class="note-line"><a href="https://quillbot.com/docs/new?mode=ai-detector" target="_blank" rel="noopener">https://quillbot.com/docs/new?mode=ai-detector</a></div><div class="note-line"><a href="https://www.humanizeai.pro/detector" target="_blank" rel="noopener">https://www.humanizeai.pro/detector</a></div></div><div class="note-para"><div class="note-line">Since these checkers can sometimes be noisy and have false positives, the threshold for something being AI-written is ≥80%.  For all options except the last, apply the error category.</div></div></div></td>
+      <td class="c-opts col-12" data-label="Fail &middot; 2"><span class="empty">—</span></td>
+      <td class="c-opts col-34" data-label="Non-Fail &middot; 3"><div class="opt warn"><span class="chip">3</span><span class="opt-text"><strong class="opt-label">[Non-Fail - Prompt LLM Usage]</strong> Any of the 4 checkers flag the prompt as being heavily AI-written (≥ 80% threshold)</span></div></td>
+      <td class="c-opts col-5" data-label="No Issues &middot; 5"><div class="opt pass"><span class="chip">5</span><span class="opt-text">The prompt is not flagged at ≥ 80% for AI usage</span></div></td>
+    </tr>
+    <tr class="row" data-fam="prompt" data-search="prompt environment context rate the environment context of the prompt dimension. the prompt must reference only entities, files, people, and events that exist in the task&#x27;s universe or are plausibly related to it. for all options except the last, apply the error category. [fail - environment context violation] the prompt refers to entities, files, people, or events that neither exist in the task&#x27;s universe nor are plausibly related to it. [no issues] the prompt refers only to entities, files, people, and events that exist in the task&#x27;s universe or are plausibly related to it.">
+      <td class="c-dim" data-label="Dimension"><span class="badge fam-prompt">Prompt</span></td>
+      <td class="c-sub" data-label="Sub-Dimension"><div class="sub-title">Environment Context</div><div class="qtext">Rate the Environment Context of the Prompt dimension.</div></td>
+      <td class="c-notes" data-label="Notes for Auditors"><div class="notes-body"><div class="note-para"><div class="note-line">The prompt must reference only entities, files, people, and events that exist in the task&#x27;s universe or are plausibly related to it.  For all options except the last, apply the error category.</div></div></div></td>
+      <td class="c-opts col-12" data-label="Fail &middot; 2"><div class="opt fail"><span class="chip">2</span><span class="opt-text"><strong class="opt-label">[Fail - Environment Context Violation]</strong> The prompt refers to entities, files, people, or events that neither exist in the task&#x27;s universe nor are plausibly related to it.</span></div></td>
+      <td class="c-opts col-34" data-label="Non-Fail &middot; 3"><span class="empty">—</span></td>
+      <td class="c-opts col-5" data-label="No Issues &middot; 5"><div class="opt pass"><span class="chip">5</span><span class="opt-text"><strong class="opt-label">[No Issues]</strong> The prompt refers only to entities, files, people, and events that exist in the task&#x27;s universe or are plausibly related to it.</span></div></td>
+    </tr>
+    <tr class="row" data-fam="prompt" data-search="prompt unique ground truth rate the unique ground truth of the prompt dimension. score the item as a whole: opening prompt + target outcomes + gtfa + known / not known. do not score the opening prompt on its own. the opening prompt is required to be abstract and partial (twelve rules #1 &quot;partial request&quot;, #2 &quot;start abstract&quot;, #7 &quot;leave room for judgment&quot;, #10 &quot;deliverables never in the opener&quot;). do not treat a vague opener, or missing details in the opener, as a defect here — that is the item working as designed. the gtfa is not meant to be recoverable from the opening prompt. it is written from the target outcomes, which the model never sees. withheld information is not the same as an undetermined answer. what this dimension actually tests: once all known / not known information has been supplied, does the item land on exactly one correct final state? for all options except the last, apply an error category. [fail - no unique ground truth] even with all known / not known information supplied, the item has more than one valid final answer. two qualified experts working the same item would deliver different outputs and both would be correct. | the correct outcome is subjective, requires an opinion, or is a matter of preference rather than fact. | the gtfa does not state one correct final state: it is vague, it restates the deliverables without filling in the real values, or it is thin enough that nothing concrete can be graded against it. [non-fail - minor convergence issues] the item resolves to a single main outcome, but a secondary element is left open — a non-critical value, an ordering, a formatting choice, or one unnamed side effect. two strong runs would differ on that element without either being wrong. | the gtfa states the correct final state but omits one of the four required areas (concrete deliverables / correct values / side effects / what must be absent), where the omission does not change what the right answer is. [no issues] the item has a unique ground truth. the gtfa states one correct final state with the real values filled in, and covers all four areas: the concrete deliverables, the correct values and figures, the side effects, and what must be absent. | any remaining variance is equivalent-form only (e.g., 3.14 vs. π, iupac name vs. common name). | two contributors steering from the same item would land in the same place.">
+      <td class="c-dim" data-label="Dimension"><span class="badge fam-prompt">Prompt</span></td>
+      <td class="c-sub" data-label="Sub-Dimension"><div class="sub-title">Unique Ground Truth</div><div class="qtext">Rate the Unique Ground Truth of the Prompt dimension.</div></td>
+      <td class="c-notes" data-label="Notes for Auditors"><div class="notes-body"><div class="note-para"><div class="note-line">Score the ITEM as a whole: opening prompt + Target Outcomes + GTFA + Known / Not Known. Do not score the opening prompt on its own.</div></div><div class="note-para"><div class="note-line">The opening prompt is REQUIRED to be abstract and partial (twelve rules #1 &quot;partial request&quot;, #2 &quot;start abstract&quot;, #7 &quot;leave room for judgment&quot;, #10 &quot;deliverables never in the opener&quot;). Do NOT treat a vague opener, or missing details in the opener, as a defect here — that is the item working as designed.</div></div><div class="note-para"><div class="note-line">The GTFA is not meant to be recoverable from the opening prompt. It is written from the Target Outcomes, which the model never sees. Withheld information is not the same as an undetermined answer.</div></div><div class="note-para"><div class="note-line">What this dimension actually tests: once ALL Known / Not Known information has been supplied, does the item land on exactly one correct final state?  For all options except the last, apply an error category.</div></div></div></td>
+      <td class="c-opts col-12" data-label="Fail &middot; 2"><div class="opt fail"><span class="chip">2</span><span class="opt-text"><strong class="opt-label">[Fail - No Unique Ground Truth]</strong> Even with all Known / Not Known information supplied, the item has more than one valid final answer. Two qualified experts working the same item would deliver different outputs and both would be correct.
+The correct outcome is subjective, requires an opinion, or is a matter of preference rather than fact.
+The GTFA does not state one correct final state: it is vague, it restates the deliverables without filling in the real values, or it is thin enough that nothing concrete can be graded against it.</span></div></td>
+      <td class="c-opts col-34" data-label="Non-Fail &middot; 3"><div class="opt warn"><span class="chip">3</span><span class="opt-text"><strong class="opt-label">[Non-Fail - Minor Convergence Issues]</strong> The item resolves to a single main outcome, but a secondary element is left open — a non-critical value, an ordering, a formatting choice, or one unnamed side effect. Two strong runs would differ on that element without either being wrong.
+The GTFA states the correct final state but omits one of the four required areas (concrete deliverables / correct values / side effects / what must be absent), where the omission does not change what the right answer is.</span></div></td>
+      <td class="c-opts col-5" data-label="No Issues &middot; 5"><div class="opt pass"><span class="chip">5</span><span class="opt-text"><strong class="opt-label">[No Issues]</strong> The item has a unique ground truth. The GTFA states one correct final state with the real values filled in, and covers all four areas: the concrete deliverables, the correct values and figures, the side effects, and what must be absent.
+Any remaining variance is equivalent-form only (e.g., 3.14 vs. π, IUPAC name vs. common name).
+Two contributors steering from the same item would land in the same place.</span></div></td>
+    </tr>
+    <tr class="row" data-fam="prompt" data-search="prompt deliverable request rate the deliverable request of the prompt dimension. score the item: the opening prompt together with the target outcomes field. do not score &quot;the conversation&quot; — in this project the contributor authors one opening prompt, not a multi-turn conversation. (the 1-3 turn simplified trajectory is a complexity test, not authored prompt content — do not score it here.) two things must be true: 1. the opening prompt contains a genuine ask. it may be loose and partial — 2-3 initial asks is the rule (twelve rules #1) — but the model must have something to act on in turn 1. a pure statement of situation with no request at all is a defect. 2. the target outcomes require at least one concrete produced output or landed side effect: a named artifact, a file, a draft, a calendar event, a connector action. each entry must be verifiable against a produced artifact or a connector action. do not penalize the opener for withholding the full deliverable list. rule #10 requires it: &quot;target outcomes go in a separate field. the full deliverable list lives in target outcomes — never in the opener.&quot; nor for leading with motive rather than a task list (rule #5). both are the item working as designed. for all options except the last, apply the error category. [fail - no deliverable request] the target outcomes require nothing to be produced or done. the item resolves entirely to factual lookup, explanation or discussion, with no artifact, file, draft, event or connector action anywhere in the list. [fail - no deliverable request] the outcomes are written as predicted user moves rather than final states (e.g., &quot;the user might ask to fix the budget sheet&quot;). a prediction cannot be graded - nobody can check whether a user &quot;might&quot; have asked for something. [fail - no deliverable request] the target outcomes field is empty, or its entries are too unspecific to name what must be produced (e.g., &quot;the model should give a good vendor recommendation&quot;). [fail - no deliverable request] the opening prompt contains no ask of any kind: it states a situation and stops, giving the model nothing to act on in turn 1. [no issues] the target deliverables require at least one concrete produced output or landed side effect, each entry verifiable against a produced artifact or a connector action, and each written as a final state rather than a predicted user move. | the opening prompt contains a genuine, if partial, ask that gets the model started in turn 1. | named artifacts carry the specific values and sections that must appear; named side effects carry recipients and timing.">
+      <td class="c-dim" data-label="Dimension"><span class="badge fam-prompt">Prompt</span></td>
+      <td class="c-sub" data-label="Sub-Dimension"><div class="sub-title">Deliverable Request</div><div class="qtext">Rate the Deliverable Request of the Prompt dimension.</div></td>
+      <td class="c-notes" data-label="Notes for Auditors"><div class="notes-body"><div class="note-para"><div class="note-line">Score the ITEM: the opening prompt together with the Target Outcomes field. Do not score &quot;the conversation&quot; — in this project the contributor authors one opening prompt, not a multi-turn conversation. (The 1-3 turn simplified trajectory is a complexity test, not authored prompt content — do not score it here.)</div></div><div class="note-para"><div class="note-line">Two things must be true:</div><div class="note-line">1. The opening prompt contains a genuine ask. It may be loose and partial — 2-3 initial asks is the rule (twelve rules #1) — but the model must have something to act on in Turn 1. A pure statement of situation with no request at all is a defect.</div><div class="note-line">2. The Target Outcomes require at least one CONCRETE produced output or landed side effect: a named artifact, a file, a draft, a calendar event, a connector action. Each entry must be verifiable against a produced artifact or a connector action.</div></div><div class="note-para"><div class="note-line">Do NOT penalize the opener for withholding the full deliverable list. Rule #10 requires it: &quot;Target outcomes go in a separate field. The full deliverable list lives in Target Outcomes — never in the opener.&quot; Nor for leading with motive rather than a task list (rule #5). Both are the item working as designed.  For all options except the last, apply the error category.</div></div></div></td>
+      <td class="c-opts col-12" data-label="Fail &middot; 2"><div class="opt fail"><span class="chip">2</span><span class="opt-text"><strong class="opt-label">[Fail - No Deliverable Request]</strong> The Target Outcomes require nothing to be produced or done. The item resolves entirely to factual lookup, explanation or discussion, with no artifact, file, draft, event or connector action anywhere in the list.</span></div><div class="opt fail"><span class="chip">2</span><span class="opt-text"><strong class="opt-label">[Fail - No Deliverable Request]</strong> The outcomes are written as predicted user moves rather than final states (e.g., &quot;the user might ask to fix the budget sheet&quot;). A prediction cannot be graded - nobody can check whether a user &quot;might&quot; have asked for something.</span></div><div class="opt fail"><span class="chip">2</span><span class="opt-text"><strong class="opt-label">[Fail - No Deliverable Request]</strong> The Target Outcomes field is empty, or its entries are too unspecific to name what must be produced (e.g., &quot;the model should give a good vendor recommendation&quot;).</span></div><div class="opt fail"><span class="chip">2</span><span class="opt-text"><strong class="opt-label">[Fail - No Deliverable Request]</strong> The opening prompt contains no ask of any kind: it states a situation and stops, giving the model nothing to act on in Turn 1.</span></div></td>
+      <td class="c-opts col-34" data-label="Non-Fail &middot; 3"><span class="empty">—</span></td>
+      <td class="c-opts col-5" data-label="No Issues &middot; 5"><div class="opt pass"><span class="chip">5</span><span class="opt-text"><strong class="opt-label">[No Issues]</strong> The Target Deliverables require at least one concrete produced output or landed side effect, each entry verifiable against a produced artifact or a connector action, and each written as a final state rather than a predicted user move.
+The opening prompt contains a genuine, if partial, ask that gets the model started in Turn 1.
+Named artifacts carry the specific values and sections that must appear; named side effects carry recipients and timing.</span></div></td>
+    </tr>
+    <tr class="row" data-fam="prompt" data-search="prompt target outcome rate the target outcome of the prompt dimension. the target outcome section lists the necessary components for a successful response. this can include components of artifacts and/or final model responses. if there are issues here, they likely indicate a misunderstanding of the prompt and may also be reflected in the rubric. note: the target outcome may include additional components beyond those required by the initial prompt in multiturn conversations. check later prompts to ensure that a requirement established early on is not revised/removed/etc when checking the outcome list. [non-fail - misaligned target outcomes]: the target outcomes list is misaligned with the prompt(s); it&#x27;s incorrect, lists outcomes which are not necessary or expected by the prompt(s), or contradicts one or more prompts (except in cases where a requirement is put forth but is changed/removed in later prompts -- the target outcome should align with the expected final state). [no issues] the target outcomes list is correct and fully aligned with the final state expected by the prompt(s).">
+      <td class="c-dim" data-label="Dimension"><span class="badge fam-prompt">Prompt</span></td>
+      <td class="c-sub" data-label="Sub-Dimension"><div class="sub-title">Target Outcome</div><div class="qtext">Rate the Target Outcome of the Prompt dimension.</div></td>
+      <td class="c-notes" data-label="Notes for Auditors"><div class="notes-body"><div class="note-para"><div class="note-line">The target outcome section lists the necessary components for a successful response. This can include components of artifacts and/or final model responses. If there are issues here, they likely indicate a misunderstanding of the prompt and may also be reflected in the rubric.</div><div class="note-line">Note: The target outcome may include additional components beyond those required by the initial prompt in multiturn conversations. Check later prompts to ensure that a requirement established early on is not revised/removed/etc when checking the outcome list.</div></div></div></td>
+      <td class="c-opts col-12" data-label="Fail &middot; 2"><span class="empty">—</span></td>
+      <td class="c-opts col-34" data-label="Non-Fail &middot; 3"><div class="opt warn"><span class="chip">3</span><span class="opt-text"><strong class="opt-label">[Non-Fail - Misaligned Target Outcomes]</strong> The target outcomes list is misaligned with the prompt(s); it&#x27;s incorrect, lists outcomes which are not necessary or expected by the prompt(s), or contradicts one or more prompts (except in cases where a requirement is put forth but is changed/removed in later prompts -- the target outcome should align with the expected final state).</span></div></td>
+      <td class="c-opts col-5" data-label="No Issues &middot; 5"><div class="opt pass"><span class="chip">5</span><span class="opt-text"><strong class="opt-label">[No Issues]</strong> The target outcomes list is correct and fully aligned with the final state expected by the prompt(s).</span></div></td>
+    </tr>
+    <tr class="row" data-fam="user-input" data-search="user input valid links rate the valid links of the user input dimension. each task must include valid trajectory links for the simplified trajectory. the links will be found per turn in a criteria builder. for all options except the last, apply the error category. [non-fail - missing/invalid links] the simplified trajectory model final trajectory link is invalid or doesn&#x27;t open. [non-fail - missing/invalid links] the simplified trajectory model final trajectory link is missing completely. [no issues] the task contains valid conversation links the simplified trajectory">
+      <td class="c-dim" data-label="Dimension"><span class="badge fam-user-input">User Input</span></td>
+      <td class="c-sub" data-label="Sub-Dimension"><div class="sub-title">Valid Links</div><div class="qtext">Rate the Valid Links of the User Input dimension.</div></td>
+      <td class="c-notes" data-label="Notes for Auditors"><div class="notes-body"><div class="note-para"><div class="note-line">Each task must include valid trajectory links for the Simplified Trajectory.</div><div class="note-line">The links will be found per turn in a criteria builder.  For all options except the last, apply the error category.</div></div></div></td>
+      <td class="c-opts col-12" data-label="Fail &middot; 2"><span class="empty">—</span></td>
+      <td class="c-opts col-34" data-label="Non-Fail &middot; 3"><div class="opt warn"><span class="chip">3</span><span class="opt-text"><strong class="opt-label">[Non-Fail - Missing/Invalid Links]</strong> The Simplified Trajectory model FINAL trajectory link is invalid or doesn&#x27;t open.</span></div><div class="opt warn"><span class="chip">3</span><span class="opt-text"><strong class="opt-label">[Non-Fail - Missing/Invalid Links]</strong> The Simplified Trajectory model FINAL trajectory link is missing completely.</span></div></td>
+      <td class="c-opts col-5" data-label="No Issues &middot; 5"><div class="opt pass"><span class="chip">5</span><span class="opt-text"><strong class="opt-label">[No Issues]</strong> The task contains valid conversation links the Simplified Trajectory</span></div></td>
+    </tr>
+    <tr class="row" data-fam="conversation" data-search="conversation output artifacts preserved rate the output artifacts preserved of the conversation dimension. verify that every output file mentioned in the final response was uploaded by the contributor. do *not* check whether embedded links inside the conversation still open, those are expected to expire. for all options except the last, apply the error category. [fail - artifacts not preserved] one or more output files mentioned in the response are missing. [no issues] every output file mentioned in the response is uploaded, or the response does not mention or produce any output files.">
+      <td class="c-dim" data-label="Dimension"><span class="badge fam-conversation">Conversation</span></td>
+      <td class="c-sub" data-label="Sub-Dimension"><div class="sub-title">Output Artifacts Preserved</div><div class="qtext">Rate the Output Artifacts Preserved of the Conversation dimension.</div></td>
+      <td class="c-notes" data-label="Notes for Auditors"><div class="notes-body"><div class="note-para"><div class="note-line">Verify that every output file mentioned in the final response was uploaded by the contributor. Do *not* check whether embedded links inside the conversation still open, those are expected to expire.  For all options except the last, apply the error category.</div></div></div></td>
+      <td class="c-opts col-12" data-label="Fail &middot; 2"><div class="opt fail"><span class="chip">2</span><span class="opt-text"><strong class="opt-label">[Fail - Artifacts Not Preserved]</strong> One or more output files mentioned in the response are missing.</span></div></td>
+      <td class="c-opts col-34" data-label="Non-Fail &middot; 3"><span class="empty">—</span></td>
+      <td class="c-opts col-5" data-label="No Issues &middot; 5"><div class="opt pass"><span class="chip">5</span><span class="opt-text"><strong class="opt-label">[No Issues]</strong> Every output file mentioned in the response is uploaded, OR The response does not mention or produce any output files.</span></div></td>
+    </tr>
+    <tr class="row" data-fam="conversation" data-search="conversation conversation quality rate the conversation quality of the conversation dimension. . for all options except the last, apply the error category. [fail - conversation quality] there is something present in the rubric that the model was not asked for at some point throughout the conversation. [no issues] the model was asked for everything present in the rubric">
+      <td class="c-dim" data-label="Dimension"><span class="badge fam-conversation">Conversation</span></td>
+      <td class="c-sub" data-label="Sub-Dimension"><div class="sub-title">Conversation Quality</div><div class="qtext">Rate the Conversation Quality of the Conversation dimension.</div></td>
+      <td class="c-notes" data-label="Notes for Auditors"><div class="notes-body"><div class="note-para"><div class="note-line">.  For all options except the last, apply the error category.</div></div></div></td>
+      <td class="c-opts col-12" data-label="Fail &middot; 2"><div class="opt fail"><span class="chip">2</span><span class="opt-text"><strong class="opt-label">[Fail - Conversation Quality]</strong> There is something present in the rubric that the model was not asked for at some point throughout the conversation.</span></div></td>
+      <td class="c-opts col-34" data-label="Non-Fail &middot; 3"><span class="empty">—</span></td>
+      <td class="c-opts col-5" data-label="No Issues &middot; 5"><div class="opt pass"><span class="chip">5</span><span class="opt-text"><strong class="opt-label">[No Issues]</strong> The model was asked for everything present in the rubric</span></div></td>
+    </tr>
+    <tr class="row" data-fam="rubric-criteria" data-search="rubric criteria weights rate the weights of the rubric criteria dimension. note on weights: criteria are weighted on a three-point scale: +1 (low), +2 (medium), +3 (high). &quot;off by one&quot; means the assigned weight differs from the correct weight by 1 point (+1 vs +2, or +2 vs +3). &quot;off by two&quot; means it differs by 2 points (+1 vs +3). for all options except the last, apply an error category. [fail - criteria weights] at least 5% (inclusive) of the criteria weights are off by 2 points (+1 assigned where +3 was correct, or +3 where +1 was correct) | at least 30% (inclusive) of the criteria weights are off by 1. [non-fail - criteria weights] between 0 and 5% of the criteria weights are off by 2 points (+1 assigned where +3 was correct, or +3 where +1 was correct) | between 0 and 30% of the criteria weights are off by 1. [no issues] all the criteria weights accurately reflect the impact of it on the response">
+      <td class="c-dim" data-label="Dimension"><span class="badge fam-rubric-criteria">Rubric Criteria</span></td>
+      <td class="c-sub" data-label="Sub-Dimension"><div class="sub-title">Weights</div><div class="qtext">Rate the Weights of the Rubric Criteria dimension.</div></td>
+      <td class="c-notes" data-label="Notes for Auditors"><div class="notes-body"><div class="note-para"><div class="note-line">Note on weights: Criteria are weighted on a three-point scale: +1 (low), +2 (medium), +3 (high). &quot;Off by one&quot; means the assigned weight differs from the correct weight by 1 point (+1 vs +2, or +2 vs +3). &quot;Off by two&quot; means it differs by 2 points (+1 vs +3).  For all options except the last, apply an error category.</div></div></div></td>
+      <td class="c-opts col-12" data-label="Fail &middot; 2"><div class="opt fail"><span class="chip">2</span><span class="opt-text"><strong class="opt-label">[Fail - Criteria Weights]</strong> At least 5% (inclusive) of the criteria weights are off by 2 points (+1 assigned where +3 was correct, or +3 where +1 was correct)
+At least 30% (inclusive) of the criteria weights are off by 1.</span></div></td>
+      <td class="c-opts col-34" data-label="Non-Fail &middot; 3"><div class="opt warn"><span class="chip">3</span><span class="opt-text"><strong class="opt-label">[Non-Fail - Criteria Weights]</strong> Between 0 and 5% of the criteria weights are off by 2 points (+1 assigned where +3 was correct, or +3 where +1 was correct)
+Between 0 and 30% of the criteria weights are off by 1.</span></div></td>
+      <td class="c-opts col-5" data-label="No Issues &middot; 5"><div class="opt pass"><span class="chip">5</span><span class="opt-text"><strong class="opt-label">[No Issues]</strong> All the criteria weights accurately reflect the impact of it on the response</span></div></td>
+    </tr>
+    <tr class="row" data-fam="rubric-criteria" data-search="rubric criteria overall rubric quality - 10% rate the overall rubric quality - 10% of the rubric criteria dimension. use the number of criteria with major issues as the numerator. use the number of criteria that the cb wrote as the denominator while calculating % values. major issues: inaccurate, counterproductive, missing critical criteria please refer to the spec doc sheet for exact definitions and examples. for all options except the last, apply the error category. [fail - 10%+ major rubric errors] 10% or more of the criteria contain major issues [non-fail - &lt; 10% major rubric errors] more than 0% and less than 10% of the criteria contain major issues [no issues] no major issues">
+      <td class="c-dim" data-label="Dimension"><span class="badge fam-rubric-criteria">Rubric Criteria</span></td>
+      <td class="c-sub" data-label="Sub-Dimension"><div class="sub-title">Overall Rubric Quality - 10%</div><div class="qtext">Rate the Overall Rubric Quality - 10% of the Rubric Criteria dimension.</div></td>
+      <td class="c-notes" data-label="Notes for Auditors"><div class="notes-body"><div class="note-para"><div class="note-line">Use the number of criteria with major issues as the numerator.</div><div class="note-line">Use the number of criteria that the CB wrote as the denominator while calculating % values.</div></div><div class="note-para"><div class="note-line">Major issues: inaccurate, counterproductive, missing critical criteria</div></div><div class="note-para"><div class="note-line">Please refer to the spec doc sheet for exact definitions and examples.  For all options except the last, apply the error category.</div></div></div></td>
+      <td class="c-opts col-12" data-label="Fail &middot; 2"><div class="opt fail"><span class="chip">2</span><span class="opt-text"><strong class="opt-label">[Fail - 10%+ Major Rubric Errors]</strong> 10% or more of the criteria contain major issues</span></div></td>
+      <td class="c-opts col-34" data-label="Non-Fail &middot; 3"><div class="opt warn"><span class="chip">3</span><span class="opt-text"><strong class="opt-label">[Non-Fail - &lt; 10% Major Rubric Errors]</strong> More than 0% and less than 10% of the criteria contain major issues</span></div></td>
+      <td class="c-opts col-5" data-label="No Issues &middot; 5"><div class="opt pass"><span class="chip">5</span><span class="opt-text"><strong class="opt-label">[No Issues]</strong> No major issues</span></div></td>
+    </tr>
+    <tr class="row" data-fam="rubric-criteria" data-search="rubric criteria overall rubric quality - 15% rate the overall rubric quality - 15% of the rubric criteria dimension. use the number of criteria with moderate or major issues as the numerator. use the number of criteria that the cb wrote as the denominator while calculating % values. major issues: inaccurate, counterproductive, missing critical criteria moderate issues: not self-contained, non-atomic, overlapping, vague/subjective, missing non-critical criteria, framing/double-negative please refer to the spec doc sheet for exact definitions and examples. for all options except the last, apply the error category. [fail - 15%+ moderate rubric errors] more than 15% (&gt;15%) of the criteria contain moderate or major issues [non-fail - up to 15% moderate errors] up to 15% (&lt;=15%) of criteria contain moderate or major issues [no issues] less than 5% (&lt;5%) of the rubrics have minor issues | no major or moderate issues">
+      <td class="c-dim" data-label="Dimension"><span class="badge fam-rubric-criteria">Rubric Criteria</span></td>
+      <td class="c-sub" data-label="Sub-Dimension"><div class="sub-title">Overall Rubric Quality - 15%</div><div class="qtext">Rate the Overall Rubric Quality - 15% of the Rubric Criteria dimension.</div></td>
+      <td class="c-notes" data-label="Notes for Auditors"><div class="notes-body"><div class="note-para"><div class="note-line">Use the number of criteria with moderate or major issues as the numerator.</div><div class="note-line">Use the number of criteria that the CB wrote as the denominator while calculating % values.</div></div><div class="note-para"><div class="note-line">Major issues: inaccurate, counterproductive, missing critical criteria</div><div class="note-line">Moderate issues: not self-contained, non-atomic, overlapping, vague/subjective, missing non-critical criteria, framing/double-negative</div><div class="note-line">Please refer to the spec doc sheet for exact definitions and examples.  For all options except the last, apply the error category.</div></div></div></td>
+      <td class="c-opts col-12" data-label="Fail &middot; 2"><div class="opt fail"><span class="chip">2</span><span class="opt-text"><strong class="opt-label">[Fail - 15%+ Moderate Rubric Errors]</strong> More than 15% (&gt;15%) of the criteria contain moderate or major issues</span></div></td>
+      <td class="c-opts col-34" data-label="Non-Fail &middot; 3"><div class="opt warn"><span class="chip">3</span><span class="opt-text"><strong class="opt-label">[Non-Fail - Up to 15% Moderate Errors]</strong> Up to 15% (&lt;=15%) of criteria contain moderate or major issues</span></div></td>
+      <td class="c-opts col-5" data-label="No Issues &middot; 5"><div class="opt pass"><span class="chip">5</span><span class="opt-text"><strong class="opt-label">[No Issues]</strong> Less than 5% (&lt;5%) of the rubrics have minor issues
+No major or moderate issues</span></div></td>
+    </tr>
+    <tr class="row" data-fam="rubric-criteria" data-search="rubric criteria overall rubric quality - 20% rate the overall rubric quality - 20% of the rubric criteria dimension. use the number of criteria with any issues (major, moderate, or minor) as the numerator. use the number of criteria that the cb wrote as the denominator while calculating % values. major issues: inaccurate, counterproductive, missing critical criteria moderate issues: not self-contained, non-atomic, overlapping, vague/subjective, missing non-critical criteria, framing/double-negative minor issues: unnecessary criteria please refer to the spec doc sheet for exact definitions and examples. for all options except the last, apply the error category. [fail - 20%+ major/moderate/minor rubric errors] 20% or more of the criteria contain minor or moderate or major issues [non-fail - &lt; 20% major/moderate/minor rubric errors] more than 0% and less than 20% of the criteria contain minor or moderate or major issues [no issues] no major, moderate, or minor issues">
+      <td class="c-dim" data-label="Dimension"><span class="badge fam-rubric-criteria">Rubric Criteria</span></td>
+      <td class="c-sub" data-label="Sub-Dimension"><div class="sub-title">Overall Rubric Quality - 20%</div><div class="qtext">Rate the Overall Rubric Quality - 20% of the Rubric Criteria dimension.</div></td>
+      <td class="c-notes" data-label="Notes for Auditors"><div class="notes-body"><div class="note-para"><div class="note-line">Use the number of criteria with any issues (major, moderate, or minor) as the numerator.</div><div class="note-line">Use the number of criteria that the CB wrote as the denominator while calculating % values.</div></div><div class="note-para"><div class="note-line">Major issues: inaccurate, counterproductive, missing critical criteria</div><div class="note-line">Moderate issues: not self-contained, non-atomic, overlapping, vague/subjective, missing non-critical criteria, framing/double-negative</div><div class="note-line">Minor issues: unnecessary criteria</div></div><div class="note-para"><div class="note-line">Please refer to the spec doc sheet for exact definitions and examples.  For all options except the last, apply the error category.</div></div></div></td>
+      <td class="c-opts col-12" data-label="Fail &middot; 2"><div class="opt fail"><span class="chip">2</span><span class="opt-text"><strong class="opt-label">[Fail - 20%+ Major/Moderate/Minor Rubric Errors]</strong> 20% or more of the criteria contain minor or moderate or major issues</span></div></td>
+      <td class="c-opts col-34" data-label="Non-Fail &middot; 3"><div class="opt warn"><span class="chip">3</span><span class="opt-text"><strong class="opt-label">[Non-Fail - &lt; 20% Major/Moderate/Minor Rubric Errors]</strong> More than 0% and less than 20% of the criteria contain minor or moderate or major issues</span></div></td>
+      <td class="c-opts col-5" data-label="No Issues &middot; 5"><div class="opt pass"><span class="chip">5</span><span class="opt-text"><strong class="opt-label">[No Issues]</strong> No major, moderate, or minor issues</span></div></td>
+    </tr>
+    <tr class="row" data-fam="rubric-criteria" data-search="rubric criteria category rate the category of the rubric criteria dimension. this refers to rubric criteria categories. for all options except the last, apply an error category. [fail - categories] at least 30% (inclusive) of the categories are incorrect [non-fail - categories] at most 30% (exclusive) of the categories are incorrect [no issues] all the categories are accurate">
+      <td class="c-dim" data-label="Dimension"><span class="badge fam-rubric-criteria">Rubric Criteria</span></td>
+      <td class="c-sub" data-label="Sub-Dimension"><div class="sub-title">Category</div><div class="qtext">Rate the Category of the Rubric Criteria dimension.</div></td>
+      <td class="c-notes" data-label="Notes for Auditors"><div class="notes-body"><div class="note-para"><div class="note-line">This refers to rubric criteria categories.  For all options except the last, apply an error category.</div></div></div></td>
+      <td class="c-opts col-12" data-label="Fail &middot; 2"><div class="opt fail"><span class="chip">2</span><span class="opt-text"><strong class="opt-label">[Fail - Categories]</strong> At least 30% (inclusive) of the categories are incorrect</span></div></td>
+      <td class="c-opts col-34" data-label="Non-Fail &middot; 3"><div class="opt warn"><span class="chip">3</span><span class="opt-text"><strong class="opt-label">[Non-Fail - Categories]</strong> At most 30% (exclusive) of the categories are incorrect</span></div></td>
+      <td class="c-opts col-5" data-label="No Issues &middot; 5"><div class="opt pass"><span class="chip">5</span><span class="opt-text"><strong class="opt-label">[No Issues]</strong> All the categories are accurate</span></div></td>
+    </tr>
+    <tr class="row" data-fam="rating" data-search="rating rubric evaluation rate the rubric evaluation of the rating dimension. is the rubric correctly evaluated against the responses? for all options except the last, apply an error category. [fail - major evaluation error] the contributor incorrectly evaluated 3 or more response ratings or over 20% of the total ratings. [non-fail - minor evaluation error] the contributor incorrectly evaluated 1-2 response ratings or between 1-20% of the total ratings. [no issues] the responses were evaluated against the rubric accurately.">
+      <td class="c-dim" data-label="Dimension"><span class="badge fam-rating">Rating</span></td>
+      <td class="c-sub" data-label="Sub-Dimension"><div class="sub-title">Rubric Evaluation</div><div class="qtext">Rate the Rubric Evaluation of the Rating dimension.</div></td>
+      <td class="c-notes" data-label="Notes for Auditors"><div class="notes-body"><div class="note-para"><div class="note-line">Is the rubric correctly evaluated against the responses?  For all options except the last, apply an error category.</div></div></div></td>
+      <td class="c-opts col-12" data-label="Fail &middot; 2"><div class="opt fail"><span class="chip">2</span><span class="opt-text"><strong class="opt-label">[Fail - Major Evaluation Error]</strong> The contributor incorrectly evaluated 3 or more response ratings OR over 20% of the total ratings.</span></div></td>
+      <td class="c-opts col-34" data-label="Non-Fail &middot; 3"><div class="opt warn"><span class="chip">3</span><span class="opt-text"><strong class="opt-label">[Non-Fail - Minor Evaluation Error]</strong> The contributor incorrectly evaluated 1-2 response ratings OR between 1-20% of the total ratings.</span></div></td>
+      <td class="c-opts col-5" data-label="No Issues &middot; 5"><div class="opt pass"><span class="chip">5</span><span class="opt-text"><strong class="opt-label">[No Issues]</strong> The responses were evaluated against the rubric accurately.</span></div></td>
+    </tr>
+    <tr class="row" data-fam="rubrics" data-search="rubrics valid model failure rate the valid model failure of the rubrics dimension. model failure is defined as a weighted score of 40% or less of the rubric criteria for the first simplified model trajectory. model failure does not need to be evaluated in part b - full trajectory. for all options except the last, apply the error category. [non-fail - no model failure] the prompt does not cause the simplified trajectory model to fail. [no issues] the simplified trajectory fails">
+      <td class="c-dim" data-label="Dimension"><span class="badge fam-rubrics">Rubrics</span></td>
+      <td class="c-sub" data-label="Sub-Dimension"><div class="sub-title">Valid Model Failure</div><div class="qtext">Rate the Valid Model Failure of the Rubrics dimension.</div></td>
+      <td class="c-notes" data-label="Notes for Auditors"><div class="notes-body"><div class="note-para"><div class="note-line">Model failure is defined as a weighted score of 40% or less of the rubric criteria for the first Simplified Model Trajectory. Model failure does not need to be evaluated in Part B - Full Trajectory.  For all options except the last, apply the error category.</div></div></div></td>
+      <td class="c-opts col-12" data-label="Fail &middot; 2"><span class="empty">—</span></td>
+      <td class="c-opts col-34" data-label="Non-Fail &middot; 3"><div class="opt warn"><span class="chip">3</span><span class="opt-text"><strong class="opt-label">[Non-Fail - No Model Failure]</strong> The prompt does not cause the Simplified Trajectory model to fail.</span></div></td>
+      <td class="c-opts col-5" data-label="No Issues &middot; 5"><div class="opt pass"><span class="chip">5</span><span class="opt-text"><strong class="opt-label">[No Issues]</strong> The Simplified Trajectory fails</span></div></td>
+    </tr>
+    <tr class="row" data-fam="all-cb-generated-content" data-search="all cb generated content un-auditable evaluate the un-auditable select [no issues] for all other components if [fail - un-auditable] is selected. this component should not be used when the task is outside the auditor&#x27;s expertise. [fail - un-auditable] - used for auditors to skip tasks when the system otherwise does not allow. to be used as a last resort. [no issues] the task can be audited.">
+      <td class="c-dim" data-label="Dimension"><span class="badge fam-all-cb-generated-content">All CB Generated Content</span></td>
+      <td class="c-sub" data-label="Sub-Dimension"><div class="sub-title">Un-auditable</div><div class="qtext">Evaluate the Un-auditable</div></td>
+      <td class="c-notes" data-label="Notes for Auditors"><div class="notes-body"><div class="note-para"><div class="note-line">Select [No Issues] for all other components if [Fail - Un-auditable] is selected.</div></div><div class="note-para"><div class="note-line">This component should not be used when the task is outside the auditor&#x27;s expertise.</div></div></div></td>
+      <td class="c-opts col-12" data-label="Fail &middot; 2"><div class="opt fail"><span class="chip">2</span><span class="opt-text"><strong class="opt-label">[Fail - Un-auditable]</strong> - Used for auditors to skip tasks when the system otherwise does not allow. To be used as a last resort.</span></div></td>
+      <td class="c-opts col-34" data-label="Non-Fail &middot; 3"><span class="empty">—</span></td>
+      <td class="c-opts col-5" data-label="No Issues &middot; 5"><div class="opt pass"><span class="chip">5</span><span class="opt-text"><strong class="opt-label">[No Issues]</strong> the task can be audited.</span></div></td>
+    </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="no-results" id="noResults">No dimensions match your search.</div>
+</main>
+
+<script>
+  var q = document.getElementById('q');
+  var chips = document.getElementById('chips');
+  var count = document.getElementById('count');
+  var noResults = document.getElementById('noResults');
+  var FAM_ORDER = ['prompt','user-input','conversation','rubric-criteria','rating','rubrics','all-cb-generated-content'];
+
+  var root = document.documentElement;
+  var themeToggle = document.getElementById('themeToggle');
+  if (themeToggle) themeToggle.addEventListener('click', function(){
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('qc-theme', next); } catch (e) {}
+  });
+
+  var famLabel = {};
+  document.querySelectorAll('.row').forEach(function(r){
+    var b = r.querySelector('.badge'); if (b) famLabel[r.getAttribute('data-fam')] = b.textContent;
+  });
+  var fam = 'all';
+
+  function allRows(){ return Array.prototype.slice.call(document.querySelectorAll('.row')); }
+
+  function sizeHeader(){
+    var tb = document.querySelector('.toolbar');
+    if (tb) document.documentElement.style.setProperty('--thead-top', tb.offsetHeight + 'px');
+  }
+  window.addEventListener('resize', sizeHeader);
+
+  function buildChips(){
+    var slugs = [];
+    allRows().forEach(function(r){ var f=r.getAttribute('data-fam'); if (slugs.indexOf(f)<0) slugs.push(f); });
+    slugs.sort(function(a,b){ return FAM_ORDER.indexOf(a) - FAM_ORDER.indexOf(b); });
+    var html = '<button class="chip-btn active" data-fam="all">All</button>';
+    slugs.forEach(function(s){ html += '<button class="chip-btn" data-fam="' + s + '">' + (famLabel[s] || s) + '</button>'; });
+    chips.innerHTML = html;
+    fam = 'all';
+  }
+
+  function apply(){
+    var term = q.value.trim().toLowerCase();
+    var rows = allRows();
+    var shown = 0;
+    rows.forEach(function(r){
+      var okFam = (fam === 'all') || (r.getAttribute('data-fam') === fam);
+      var okTerm = !term || r.getAttribute('data-search').indexOf(term) !== -1;
+      var show = okFam && okTerm;
+      r.style.display = show ? '' : 'none';
+      if (show) shown++;
+    });
+    count.textContent = 'Showing ' + shown + ' of ' + rows.length + ' dimensions';
+    noResults.style.display = shown ? 'none' : 'block';
+  }
+
+  q.addEventListener('input', apply);
+  chips.addEventListener('click', function(e){
+    var b = e.target.closest('.chip-btn'); if (!b) return;
+    fam = b.getAttribute('data-fam');
+    chips.querySelectorAll('.chip-btn').forEach(function(x){ x.classList.remove('active'); });
+    b.classList.add('active');
+    apply();
+  });
+
+  buildChips();
+  apply();
+  sizeHeader();
+</script>
+</body>
+</html>

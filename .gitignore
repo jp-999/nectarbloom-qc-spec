@@ -1,0 +1,5 @@
+# Publish ONLY QC_Spec_Doc.html — ignore everything else in this folder.
+# (whitelist approach: ignore all, then re-include the file we want)
+*
+!.gitignore
+!QC_Spec_Doc.html
