@@ -215,6 +215,7 @@
   .fam-rubric-criteria { background: #4f46e5; }
   .fam-rating { background: #0891b2; }
   .fam-rubrics { background: #c026d3; }
+  .fam-rubric-and-justification { background: #2563eb; }
   .fam-all-cb-generated-content { background: #64748b; }
 
   .sub-title { font-weight: 700; font-size: 14.5px; color: var(--ink); }
@@ -301,9 +302,9 @@
         </button>
       </div>
       <div class="stats">
-        <span class="stat"><strong>19</strong> Dimensions</span>
-        <span class="stat"><strong>7</strong> Families</span>
-        <span class="stat"><strong>52</strong> Options</span>
+        <span class="stat"><strong>20</strong> Dimensions</span>
+        <span class="stat"><strong>8</strong> Families</span>
+        <span class="stat"><strong>54</strong> Options</span>
       </div>
     </div>
   </div>
@@ -495,6 +496,14 @@ No major or moderate issues</span></div></td>
       <td class="c-opts col-34" data-label="Non-Fail &middot; 3"><div class="opt warn"><span class="chip">3</span><span class="opt-text"><strong class="opt-label">[Non-Fail - No Model Failure]</strong> The prompt does not cause the Simplified Trajectory model to fail.</span></div></td>
       <td class="c-opts col-5" data-label="No Issues &middot; 5"><div class="opt pass"><span class="chip">5</span><span class="opt-text"><strong class="opt-label">[No Issues]</strong> The Simplified Trajectory fails</span></div></td>
     </tr>
+    <tr class="row" data-fam="rubric-and-justification" data-search="rubric and justification language rate the language aspect of the rubric and justification. rubrics and justifications must be written in english, not the task&#x27;s assigned language/locale. for all options except the last, apply the error category. [fail - incorrect language] the rubrics or justifications are not written in english [no issues] the rubrics or justifications are written in english">
+      <td class="c-dim" data-label="Dimension"><span class="badge fam-rubric-and-justification">Rubric and Justification</span></td>
+      <td class="c-sub" data-label="Sub-Dimension"><div class="sub-title">Language</div><div class="qtext">Rate the language aspect of the Rubric and justification.</div></td>
+      <td class="c-notes" data-label="Notes for Auditors"><div class="notes-body"><div class="note-para"><div class="note-line">Rubrics and justifications must be written in English, not the task&#x27;s assigned language/locale.  For all options except the last, apply the error category.</div></div></div></td>
+      <td class="c-opts col-12" data-label="Fail &middot; 2"><div class="opt fail"><span class="chip">2</span><span class="opt-text"><strong class="opt-label">[Fail - Incorrect Language]</strong> The Rubrics or justifications are not written in English</span></div></td>
+      <td class="c-opts col-34" data-label="Non-Fail &middot; 3"><span class="empty">—</span></td>
+      <td class="c-opts col-5" data-label="No Issues &middot; 5"><div class="opt pass"><span class="chip">5</span><span class="opt-text"><strong class="opt-label">[No Issues]</strong> The Rubrics or justifications are written in English</span></div></td>
+    </tr>
     <tr class="row" data-fam="all-cb-generated-content" data-search="all cb generated content un-auditable evaluate the un-auditable select [no issues] for all other components if [fail - un-auditable] is selected. this component should not be used when the task is outside the auditor&#x27;s expertise. [fail - un-auditable] - used for auditors to skip tasks when the system otherwise does not allow. to be used as a last resort. [no issues] the task can be audited.">
       <td class="c-dim" data-label="Dimension"><span class="badge fam-all-cb-generated-content">All CB Generated Content</span></td>
       <td class="c-sub" data-label="Sub-Dimension"><div class="sub-title">Un-auditable</div><div class="qtext">Evaluate the Un-auditable</div></td>
@@ -514,7 +523,7 @@ No major or moderate issues</span></div></td>
   var chips = document.getElementById('chips');
   var count = document.getElementById('count');
   var noResults = document.getElementById('noResults');
-  var FAM_ORDER = ['prompt','user-input','conversation','rubric-criteria','rating','rubrics','all-cb-generated-content'];
+  var FAM_ORDER = ['prompt','user-input','conversation','rubric-criteria','rating','rubrics','rubric-and-justification','all-cb-generated-content'];
 
   var root = document.documentElement;
   var themeToggle = document.getElementById('themeToggle');
