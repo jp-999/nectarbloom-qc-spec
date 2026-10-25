@@ -7,16 +7,3 @@
 QC-spec webite/*
 !QC-spec webite/index.html
 !QC-spec webite/QC_Spec_Doc.html
-
-# Nectarbloom reference hub (Reference page + deck viewers)
-!nectarbloom-hub/
-nectarbloom-hub/*
-!nectarbloom-hub/index.html
-!nectarbloom-hub/common-errors.html
-!nectarbloom-hub/onboarding.html
-!nectarbloom-hub/assets/
-nectarbloom-hub/assets/*
-!nectarbloom-hub/assets/deck.css
-!nectarbloom-hub/assets/deck.js
-!nectarbloom-hub/assets/Nectarbloom Common Errors.pptx
-!nectarbloom-hub/assets/Nectarbloom onboarding.pptx
