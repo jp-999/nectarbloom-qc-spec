@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contributor Onboarding — Nectarbloom (Ultra Evals)</title>
+<link rel="stylesheet" href="assets/deck.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="back" href="index.html">&#8249;&nbsp; Reference</a>
+  <div class="deck-name">Contributor Onboarding <span>&middot; Account &middot; Queue 1 &middot; Queue 2</span></div>
+  <div class="tb-actions">
+    <button class="tb-btn" id="exportPdf" type="button"><span class="ic">&#8681;</span> Export to PDF</button>
+    <a class="tb-btn" href="assets/Nectarbloom%20onboarding.pptx" download><span class="ic">&#8681;</span> Export to PPTX</a>
+  </div>
+</header>
+
+<div class="stage">
+  <div class="frame">
+    <span class="br tl"></span><span class="br tr"></span><span class="br bl"></span><span class="br rb"></span>
+
+    <!-- 1 TITLE -->
+    <section class="slide title active">
+      <div class="s-eyebrow">Contributor Onboarding</div>
+      <h1 class="big">Nectarbloom</h1>
+      <p class="lead">Building and evaluating AI items across six locales.</p>
+      <div class="flow">
+        <span class="step">Account Hydration</span><span class="arr">&#8594;</span>
+        <span class="step">Prompt &amp; Rubrics (Queue 1)</span><span class="arr">&#8594;</span>
+        <span class="step">SxS (Queue 2)</span>
+      </div>
+      <div class="title-note">Every step, gate and hard-fail rule in one place.</div>
+    </section>
+
+    <!-- 2 ORIENTATION -->
+    <section class="slide">
+      <div class="s-badge">Orientation</div>
+      <div class="s-head">
+        <div class="s-eyebrow">Orientation</div>
+        <h2 class="s-title">Two queues, one item</h2>
+        <p class="s-intro">An evaluation item is built in Queue 1, then run against models in Queue 2. Most contributors work in one queue, but the handoff is what the work is for.</p>
+      </div>
+      <div class="s-body">
+        <div class="cols">
+          <div class="ov-card"><h4><span class="k">Queue 1</span>Prompt and Rubrics</h4><p>You build the item: the opening prompt, the target deliverables, the GTFA, the weighted rubric and, on Type 2, the Known / Not Known steering script.</p><p><b>Output:</b> a finished, frozen item.</p></div>
+          <div class="ov-card"><h4><span class="k">Queue 2</span>SxS</h4><p>You run that item as a full 20+ turn conversation against two models, grade both against the existing rubric, rate eight dimensions and record one preference.</p><p><b>Output:</b> comparable preference data.</p></div>
+        </div>
+      </div>
+      <div class="callout"><b>The rule that spans both queues:</b> every file, person, date and event you reference must actually exist in your hydrated universe. Never invent an entity; never mock an input file.</div>
+      <div class="s-foot"><span>Orientation</span><span>Contributor Onboarding</span></div>
+    </section>
+
+    <!-- 3 ORDER OF WORK -->
+    <section class="slide">
+      <div class="s-badge">Pipeline</div>
+      <div class="s-head">
+        <div class="s-eyebrow">The order of work</div>
+        <h2 class="s-title">The whole pipeline at a glance</h2>
+        <p class="s-intro">Three phases, in order. Most rejections come from skipping a step in an earlier phase.</p>
+      </div>
+      <div class="s-body">
+        <div class="cols three">
+          <div class="col ok"><h4>Phase 0 &middot; Set up</h4><ul>
+            <li>Claim your Gemini demo account</li>
+            <li>Create one Gmail address</li>
+            <li>Run /setup for your universe</li>
+            <li>Reset before every run</li>
+          </ul></div>
+          <div class="col ok"><h4>Phase 1 &middot; Build &middot; Queue 1</h4><ul>
+            <li>Explore the universe</li>
+            <li>Write prompt + deliverables</li>
+            <li>GTFA, then rubric, then Known/Not Known</li>
+            <li>Pass the 40% gate</li>
+          </ul></div>
+          <div class="col ok"><h4>Phase 2 &middot; Evaluate &middot; Queue 2</h4><ul>
+            <li>Rehydrate, run 20+ turns</li>
+            <li>Grade + annotate turns</li>
+            <li>Rate 8 dimensions</li>
+            <li>Record one preference</li>
+          </ul></div>
+        </div>
+      </div>
+      <div class="callout rose"><b>Never delete a chat.</b> Deleting permanently kills every share link in the task and the whole task fails, in both queues. Start a new chat per task and leave every chat in place.</div>
+      <div class="s-foot"><span>The order of work</span><span>Contributor Onboarding</span></div>
+    </section>
+
+    <!-- 4 PHASE 0 ACCOUNT -->
+    <section class="slide">
+      <div class="s-badge">Phase 0 &middot; Account</div>
+      <div class="s-head">
+        <div class="s-eyebrow">Phase 0 &middot; Account</div>
+        <h2 class="s-title">Two links, and picking the wrong one is the classic mistake</h2>
+        <p class="s-intro">Two accounts are in play. You run the models in a Gemini demo account you claim; the item's universe lives in a hydrated Gmail address you create and keep for the whole project. These two links manage that second one.</p>
+      </div>
+      <div class="s-body">
+        <div class="cols">
+          <div class="col"><h4>/setup <span class="k">&middot; Rare</span></h4><p style="margin:0 0 9px;color:var(--mute);font-size:12.8px">Changes whose life is in the account.</p><ul>
+            <li>Your very first account</li>
+            <li>A different persona or universe</li>
+            <li>Same address, never make a second Gmail</li>
+          </ul></div>
+          <div class="col"><h4>/reset <span class="k">&middot; Constant</span></h4><p style="margin:0 0 9px;color:var(--mute);font-size:12.8px">Puts that same life back to how it started.</p><ul>
+            <li>Before every new task</li>
+            <li>Before each model's run</li>
+            <li>Before a Type 2 simplified trajectory</li>
+          </ul></div>
+        </div>
+      </div>
+      <div class="callout"><b>Reset before a run, never after one.</b> Everything the model produced is evidence you still need: files to upload, drafts to check, events to verify while grading. &nbsp;&middot;&nbsp; synthetic-account-hydration.outlier.ai/setup &middot; /reset</div>
+      <div class="s-foot"><span>Phase 0 &middot; Account</span><span>Contributor Onboarding</span></div>
+    </section>
+
+    <!-- 5 PHASE 0 STEP BY STEP -->
+    <section class="slide">
+      <div class="s-badge">Phase 0</div>
+      <div class="s-head">
+        <div class="s-eyebrow">Phase 0 &middot; Step by step</div>
+        <h2 class="s-title">Getting set up: do these once, in this order</h2>
+        <p class="s-intro">About ten minutes, most of it waiting. Steps 2 to 6 repeat each time you are moved to a new persona or universe: same Gmail address, new selection in the dropdown.</p>
+      </div>
+      <div class="s-body">
+        <ol class="steps two">
+          <li class="step-item"><span class="step-n">1</span><h5>Claim your Gemini demo account</h5><p>app.outlier.ai/demo-account-claim. The account you run models in, and the one your login and model-selector screenshots must show.</p></li>
+          <li class="step-item"><span class="step-n">2</span><h5>Create the Gmail address, once</h5><p>PersonaFirstName.YourConvention@gmail.com. Never a personal account. Ask your QM which universe to hydrate.</p></li>
+          <li class="step-item"><span class="step-n">3</span><h5>Open /setup and enter your details</h5><p>Pick your universe from the Task workspace dropdown, type the exact address, click Continue with Google. Be signed in to outlier.ai first.</p></li>
+          <li class="step-item"><span class="step-n">4</span><h5>Click through the "hasn't verified this app" warning</h5><p>Expected: the hydrator is an internal tool. Advanced, then Go to outlier.ai (unsafe). Some accounts skip this screen.</p></li>
+          <li class="step-item"><span class="step-n">5</span><h5>Grant all three permissions</h5><p>Tick Select all: Gmail, Drive and Calendar. Partial permissions hydrate mail but no Drive, which is painful to diagnose.</p></li>
+          <li class="step-item"><span class="step-n">6</span><h5>Wait for hydration to finish, up to five minutes</h5><p>Watch the new inbox fill in another tab. Do not start a task until the account genuinely looks lived-in.</p></li>
+        </ol>
+      </div>
+      <div class="callout"><b>The hydrator never asks for your Google password.</b> If any Outlier page does, stop and raise it in the War Room.</div>
+      <div class="s-foot"><span>Phase 0 &middot; Step by step</span><span>Contributor Onboarding</span></div>
+    </section>
+
+    <!-- 6 PHASE 0 DISCIPLINE -->
+    <section class="slide">
+      <div class="s-badge">Phase 0</div>
+      <div class="s-head">
+        <div class="s-eyebrow">Phase 0 &middot; Discipline</div>
+        <h2 class="s-title">When to reset, and when not to</h2>
+      </div>
+      <div class="s-body">
+        <div class="cols">
+          <div class="col ok"><h4>Reset</h4><ul>
+            <li>Before starting a new task</li>
+            <li>Before the first model's run</li>
+            <li>Before the second model's run</li>
+            <li>Before a Type 2 simplified trajectory</li>
+          </ul></div>
+          <div class="col err"><h4>Do not reset</h4><ul>
+            <li>Midway through a run</li>
+            <li>After a run, before uploading files</li>
+            <li>Moving to a new persona (use /setup instead)</li>
+          </ul></div>
+        </div>
+      </div>
+      <div class="callout"><b>Why the second reset matters most.</b> Models take real actions: they create events, save files and leave drafts, and those persist. Run a second model without resetting and it starts in a world the first one rearranged, so the comparison is worthless. Wait for the green "Your workspace is restored" before you open a chat.</div>
+      <div class="s-foot"><span>Phase 0 &middot; Discipline</span><span>Contributor Onboarding</span></div>
+    </section>
+
+    <!-- 7 QUEUE 1 TASK TYPE -->
+    <section class="slide">
+      <div class="s-badge">Queue 1</div>
+      <div class="s-head">
+        <div class="s-eyebrow">Queue 1 &middot; Prompt and Rubrics</div>
+        <h2 class="s-title">First question: which task type do you have?</h2>
+        <p class="s-intro">Open the Opening Prompt step. If the prompt and target deliverables are already filled in, you have Type 1. If they are empty and waiting for you, you have Type 2.</p>
+      </div>
+      <div class="s-body">
+        <table class="dtable t3">
+          <thead><tr><th class="c-err">Field</th><th>Type 1 &middot; Seeded</th><th>Type 2 &middot; From scratch</th></tr></thead>
+          <tbody>
+            <tr><td class="c-err">Opening prompt</td><td>Pre-filled, you review it</td><td>You write it</td></tr>
+            <tr><td class="c-err">User goal</td><td>Given to you</td><td>Does not exist</td></tr>
+            <tr><td class="c-err">Target deliverables</td><td>Pre-filled, you sharpen</td><td>You write them</td></tr>
+            <tr><td class="c-err">Simplified trajectory</td><td>Not required</td><td>Required &middot; 1-3 turns</td></tr>
+            <tr><td class="c-err">40% complexity gate</td><td>Not required</td><td>Required</td></tr>
+            <tr><td class="c-err">Known / Not Known</td><td>Not required</td><td>You write it</td></tr>
+            <tr><td class="c-err">GTFA + weighted rubric</td><td>You write both</td><td>You write both</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout"><b>Put plainly:</b> Type 1 starts at the GTFA, everything before it is given and only needs a validity check. Type 2 starts at a blank page and must also prove the item is hard enough.</div>
+      <div class="s-foot"><span>Queue 1 &middot; Task type</span><span>Contributor Onboarding</span></div>
+    </section>
+
+    <!-- 8 QUEUE 1 STEP BY STEP -->
+    <section class="slide">
+      <div class="s-badge">Queue 1</div>
+      <div class="s-head">
+        <div class="s-eyebrow">Queue 1 &middot; Step by step</div>
+        <h2 class="s-title">Build in this order</h2>
+        <p class="s-intro">A rubric written before the GTFA almost always misses deliverables.</p>
+      </div>
+      <div class="s-body">
+        <ol class="steps two">
+          <li class="step-item"><span class="step-n">1</span><h5>Confirm the demo account</h5><p>Screenshot with the address legible.</p></li>
+          <li class="step-item"><span class="step-n">2</span><h5>Confirm the model</h5><p>Screenshot the selector before the run.</p></li>
+          <li class="step-item"><span class="step-n">3</span><h5>Explore your universe</h5><p>List filenames, people and dates; confirm each on screen.</p></li>
+          <li class="step-item"><span class="step-n">4</span><h5>Check the artifact pack</h5><p>Flag anything translated or missing.</p></li>
+          <li class="step-item"><span class="step-n">5</span><h5>Write the opening prompt</h5><p>2-3 loose asks &middot; the twelve rules &middot; no LLM.</p></li>
+          <li class="step-item"><span class="step-n">6</span><h5>Write the target deliverables</h5><p>Artifacts, values, side effects, what must be absent.</p></li>
+          <li class="step-item"><span class="step-n">7</span><h5>Run the simplified trajectory</h5><p>Rehydrate first &middot; 1-3 turns &middot; dump everything.</p></li>
+          <li class="step-item"><span class="step-n">8</span><h5>Record each turn</h5><p>Exact prompt as the title, own link, files.</p></li>
+          <li class="step-item"><span class="step-n">9</span><h5>Submit trajectory evidence</h5><p>Share link + chat PDF that matches it.</p></li>
+          <li class="step-item"><span class="step-n">10</span><h5>Grade it and check the gate</h5><p>Must pass &#8804; 40% of available weight.</p></li>
+          <li class="step-item"><span class="step-n">11</span><h5>Write the GTFA</h5><p>Deliverables &middot; values &middot; side effects &middot; absences.</p></li>
+          <li class="step-item"><span class="step-n">12</span><h5>Author 10-30 weighted criteria</h5><p>Binary, observable, atomic, positive.</p></li>
+          <li class="step-item"><span class="step-n">13</span><h5>Tag every criterion</h5><p>Across all six Outcome Quality sub-dimensions.</p></li>
+          <li class="step-item"><span class="step-n">14</span><h5>Rubric eval check</h5><p>Then Known / Not Known, then submit.</p></li>
+        </ol>
+      </div>
+      <div class="callout"><b>Steps 7 to 10 are Type 2 only.</b> On a Type 1 task you start at step 11.</div>
+      <div class="s-foot"><span>Queue 1 &middot; Step by step</span><span>Contributor Onboarding</span></div>
+    </section>
+
+    <!-- 9 QUEUE 1 THE CRAFT -->
+    <section class="slide">
+      <div class="s-badge">Queue 1</div>
+      <div class="s-head">
+        <div class="s-eyebrow">Queue 1 &middot; The craft</div>
+        <h2 class="s-title">The opening prompt is deliberately incomplete</h2>
+        <p class="s-intro">The gap between what the opener states and what it withholds is the difficulty of your item. An item that gives everything away in Turn 1 cannot produce a 20+ turn conversation.</p>
+      </div>
+      <div class="s-body">
+        <div class="cols">
+          <div class="col"><h4>The rules that matter most</h4><ul>
+            <li>A <b>partial request</b>: 2-3 loose asks, not the full task</li>
+            <li>Start abstract; let the goal emerge over the conversation</li>
+            <li>Lead with motive and situation, never a task list</li>
+            <li>Ground every entity in your universe</li>
+            <li>Leave room for judgment, not a mechanical fetch</li>
+            <li>Natural, human, written by you: no LLM, paste is disabled</li>
+            <li>Native register for your locale, never a translation</li>
+            <li>Deliverables live in a separate field, never in the opener</li>
+          </ul></div>
+          <div class="col">
+            <div class="box good"><div class="box-label">Good opener</div><div class="quote"><em class="q">"My quarterly numbers are due to the board Friday and something feels off in the March figures, can you help me get to the bottom of it before then?"</em></div><div class="meta">Real stakes. No artifact, format or tool named.</div></div>
+            <div class="box bad"><div class="box-label">Too easy, rewrite</div><div class="quote"><em class="q">"Create a one-page PDF of my March expenses with a totals row and email it to my manager."</em></div><div class="meta">Names the artifact, format and action. A strong model one-shots it.</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="s-foot"><span>Queue 1 &middot; The craft</span><span>Contributor Onboarding</span></div>
+    </section>
+
+    <!-- 10 QUEUE 1 ANSWER KEY -->
+    <section class="slide">
+      <div class="s-badge">Queue 1</div>
+      <div class="s-head">
+        <div class="s-eyebrow">Queue 1 &middot; The answer key</div>
+        <h2 class="s-title">Target deliverables, then the GTFA</h2>
+        <p class="s-intro">Work the task live first, so the outcome reflects what a strong result actually is. Then write it down. Anything you leave out cannot be graded later.</p>
+      </div>
+      <div class="s-body">
+        <div class="cols">
+          <div class="col"><h4>Every deliverable covers three things</h4><ul>
+            <li><b>The named artifacts</b>, with the specific values and sections that must appear</li>
+            <li><b>The named side effects</b>: drafts, calendar entries, connector actions, with recipients and timing</li>
+            <li><b>What must be absent</b>: out-of-scope data, other personas' PII, a draft that was sent</li>
+          </ul></div>
+          <div class="col ok"><h4>The GTFA covers all four</h4><ul>
+            <li>The concrete deliverables</li>
+            <li>The correct values and figures</li>
+            <li>The side effects: events created, drafts prepared, files produced</li>
+            <li>What must be absent: no hallucinated contacts, no unauthorised actions</li>
+          </ul></div>
+        </div>
+      </div>
+      <div class="callout"><b>Write deliverables as final states, never as predicted user moves.</b> "The user might ask to fix the budget sheet" cannot be graded. Every exact value in a criterion must trace back to the GTFA or the deliverables.</div>
+      <div class="s-foot"><span>Queue 1 &middot; The answer key</span><span>Contributor Onboarding</span></div>
+    </section>
+
+    <!-- 11 QUEUE 1 TYPE 2 GATE -->
+    <section class="slide">
+      <div class="s-badge">Queue 1 &middot; Type 2</div>
+      <div class="s-head">
+        <div class="s-eyebrow">Queue 1 &middot; Type 2 only</div>
+        <h2 class="s-title">The simplified trajectory and the 40% gate</h2>
+        <p class="s-intro">A complexity test of your item, not an evaluation of the model. You deliberately give the model the easiest possible path, all deliverables in 1-3 turns, no steering, and check that it still fails most of your rubric.</p>
+      </div>
+      <div class="s-body">
+        <div class="statrow" style="margin-bottom:16px">
+          <div class="stat-chip"><span class="bignum">&#8804; 40%</span><span class="lbl">of the available rubric weight may pass, or the item is too easy.</span></div>
+        </div>
+        <ol class="steps two">
+          <li class="step-item"><span class="step-n">1</span><h5>Rehydrate first</h5><p>The gate is only meaningful against a clean environment.</p></li>
+          <li class="step-item"><span class="step-n">2</span><h5>1-3 turns, unsteered</h5><p>If you catch yourself nudging the model, stop and start over.</p></li>
+          <li class="step-item"><span class="step-n">3</span><h5>Save the share link after every turn</h5><p>Each turn has its own URL and cannot be recovered.</p></li>
+          <li class="step-item"><span class="step-n">4</span><h5>Grade against the same rubric</h5><p>Not a separate, easier one.</p></li>
+        </ol>
+      </div>
+      <div class="callout"><b>Fix the item, not the measurement.</b> Do not delete or weaken criteria to force the number down. Add constraints, edge cases, cross-referencing and multi-artifact coordination, then re-run and re-grade. The percentage is weighted: failing a +3 criterion moves it far more than a +1.</div>
+      <div class="s-foot"><span>Queue 1 &middot; Type 2 gate</span><span>Contributor Onboarding</span></div>
+    </section>
+
+    <!-- 12 QUEUE 1 RUBRIC IS FACTS -->
+    <section class="slide">
+      <div class="s-badge">Queue 1</div>
+      <div class="s-head">
+        <div class="s-eyebrow">Queue 1 &middot; The rubric</div>
+        <h2 class="s-title">A rubric is a list of checkable facts</h2>
+        <p class="s-intro">Not a scoring guide, not guidelines, not a description of what good looks like. Specific statements about the work, each true or false when you look at it.</p>
+      </div>
+      <div class="s-body">
+        <div class="cols">
+          <div class="col"><div class="box good"><div class="box-label">A criterion</div><div class="quote"><em class="q">"The report includes a section titled Risks."</em></div><div class="meta">True or false, and everyone who looks will agree.</div></div></div>
+          <div class="col"><div class="box bad"><div class="box-label">Not a criterion</div><div class="quote"><em class="q">"The report should be well structured and easy to follow."</em></div><div class="meta">This is a hope. Two readers will not mark it the same way.</div></div></div>
+        </div>
+        <div class="ov-grid four" style="margin-top:14px">
+          <div class="ov-card"><h4>Repeatability</h4><p>The same work scores the same from anyone.</p></div>
+          <div class="ov-card"><h4>Comparability</h4><p>Two runs against one fixed standard, the product.</p></div>
+          <div class="ov-card"><h4>A record</h4><p>Point at the criterion, not at taste.</p></div>
+          <div class="ov-card"><h4>Speed</h4><p>Checking facts beats forming an opinion.</p></div>
+        </div>
+      </div>
+      <div class="callout"><b>Binary, never scaled.</b> Avoid "Rate the clarity 1 to 5" (every reader picks a different number). Prefer "The summary is 200 words or fewer" (one reader, one answer). Wanting a scale usually means two or three binary criteria are hiding in one line.</div>
+      <div class="s-foot"><span>Queue 1 &middot; The rubric</span><span>Contributor Onboarding</span></div>
+    </section>
+
+    <!-- 13 QUEUE 1 CRITERIA + WEIGHTS -->
+    <section class="slide">
+      <div class="s-badge">Queue 1</div>
+      <div class="s-head">
+        <div class="s-eyebrow">Queue 1 &middot; The rubric</div>
+        <h2 class="s-title">10-30 criteria, each weighted +1 to +3</h2>
+      </div>
+      <div class="s-body">
+        <div class="cols">
+          <div class="col"><h4>Every criterion must be</h4><ul>
+            <li><b>Binary</b>: unambiguously pass or fail</li>
+            <li><b>Observable</b> in the artifact or transcript, never in reasoning</li>
+            <li><b>Product-independent</b>: no product name, no interface quirk</li>
+            <li><b>Atomic</b>: one requirement each, no "and" chains</li>
+            <li><b>Positive</b>: States / Includes / Reports / Provides</li>
+            <li><b>Self-contained</b>: decidable with only the prompt and input files</li>
+          </ul></div>
+          <div class="col"><h4>Weighting</h4><ul>
+            <li><b>+3 Essential</b>: failure means the user's goal is not completed</li>
+            <li><b>+2 Important</b>: the output is unusable as delivered without it</li>
+            <li><b>+1 Minor positive</b>: a nice-to-have; the task is still fulfilled</li>
+          </ul></div>
+        </div>
+      </div>
+      <div class="callout"><b>Run the "looks-correct-but-wrong" test on every rubric.</b> Describe one output that would look plausible yet should fail: right numbers but the draft was sent; a figure from a stale source; a fabricated name that reads real. If your rubric would not catch it, add the criterion that does. Weight inflation is the common failure: if most of your list is +3, the weights distinguish nothing.</div>
+      <div class="s-foot"><span>Queue 1 &middot; The rubric</span><span>Contributor Onboarding</span></div>
+    </section>
+
+    <!-- 14 QUEUE 1 ORDER OF WORK -->
+    <section class="slide">
+      <div class="s-badge">Queue 1</div>
+      <div class="s-head">
+        <div class="s-eyebrow">Queue 1 &middot; Order of work</div>
+        <h2 class="s-title">Work the task before you write a single criterion</h2>
+        <p class="s-intro">The order is fixed, and it is the part most often skipped. You cannot write a rubric against an imagined result.</p>
+      </div>
+      <div class="s-body">
+        <ol class="steps two">
+          <li class="step-item"><span class="step-n">1</span><h5>First: define the intent and opening prompt</h5><p>The concrete deliverable a real user would pay for.</p></li>
+          <li class="step-item"><span class="step-n">2</span><h5>Then: run the task live, on more than one model</h5><p>Several turns. You are looking for how the task actually behaves.</p></li>
+          <li class="step-item"><span class="step-n">3</span><h5>Then: fix the target outcome</h5><p>The reference final state. This becomes the anchor for everything scored.</p></li>
+          <li class="step-item"><span class="step-n">4</span><h5>Only then: write the criteria against it</h5><p>The target outcome is what makes a criterion checkable.</p></li>
+        </ol>
+      </div>
+      <div class="callout"><b>The person applying your rubric has never seen your reasoning.</b> Every value, filename, recipient and date should trace to the target outcome and GTFA. "Reports the net distribution as $7,626.60" is only writable because you worked the task and know the number.</div>
+      <div class="s-foot"><span>Queue 1 &middot; Order of work</span><span>Contributor Onboarding</span></div>
+    </section>
+
+    <!-- 15 QUEUE 1 WHAT REVIEWERS FIND -->
+    <section class="slide">
+      <div class="s-badge">Queue 1</div>
+      <div class="s-head">
+        <div class="s-eyebrow">Queue 1 &middot; What reviewers find</div>
+        <h2 class="s-title">Where rubrics actually fail</h2>
+        <p class="s-intro">Across 297 criteria flagged as defective, the distribution was lopsided. The two at the top are more than half of everything found, and both are caught by one question.</p>
+      </div>
+      <div class="s-body">
+        <div class="qbox"><span class="k">Ask one question of every line</span>"Would a perfect, honest response pass this, and would two people reading only the prompt agree on borderline work?"</div>
+        <p style="margin:14px 0 0;color:var(--mute);font-size:12.8px">Duplication and bundling are what people instinctively proofread for, and they are almost never the problem.</p>
+      </div>
+      <div class="callout"><b>Review thresholds:</b> roughly 10% of criteria carrying a major defect, 15% major-or-moderate, or 20% carrying any defect, and the rubric fails review.</div>
+      <div class="s-foot"><span>Queue 1 &middot; What reviewers find</span><span>Contributor Onboarding</span></div>
+    </section>
+
+    <!-- 16 QUEUE 1 TWO DEFECTS -->
+    <section class="slide">
+      <div class="s-badge">Queue 1</div>
+      <div class="s-head">
+        <div class="s-eyebrow">Queue 1 &middot; The rubric</div>
+        <h2 class="s-title">The two defects that cost the most</h2>
+        <p class="s-intro">Together they are 56% of everything reviewers find. Both are caught by asking one question of each line. Every example below is a real submitted criterion.</p>
+      </div>
+      <div class="s-body">
+        <div class="cols">
+          <div class="col"><h4><span class="bignum" style="font-size:24px;color:var(--bad-ink)">26%</span> &nbsp;Punishes the right answer</h4>
+            <p style="margin:0 0 9px;color:var(--mute);font-size:12.5px">The criterion rewards something the conversation ruled out, or invents a constraint the user never set. A flawless response fails it.</p>
+            <div class="box bad"><div class="quote"><em class="q">"Provides the file already in the first turn."</em></div><div class="meta">At turn 3 the user said to produce the document only on request.</div></div>
+            <p style="margin:9px 0 0;color:var(--plum);font-size:12px;font-weight:700">Test: would a perfect, honest response pass this?</p>
+          </div>
+          <div class="col"><h4><span class="bignum" style="font-size:24px;color:var(--bad-ink)">30%</span> &nbsp;Wording two people cannot apply</h4>
+            <p style="margin:0 0 9px;color:var(--mute);font-size:12.5px">The criterion turns on a word with no observable feature, so the result depends on who is scoring.</p>
+            <div class="box bad"><div class="quote"><em class="q">"Maintains a reassuring tone in the note."</em></div><div class="meta">Tone has no threshold, and this note also delivers bad news.</div></div>
+            <p style="margin:9px 0 0;color:var(--plum);font-size:12px;font-weight:700">Test: would two people agree on borderline work?</p>
+          </div>
+        </div>
+      </div>
+      <div class="callout"><b>The fix is always the same move:</b> replace the adjective with the observable feature. "Reassuring tone" becomes the specific sentence the note must contain. "Few screenshots" becomes a count.</div>
+      <div class="s-foot"><span>Queue 1 &middot; The rubric</span><span>Contributor Onboarding</span></div>
+    </section>
+
+    <!-- 17 QUEUE 1 WORKED EXAMPLE -->
+    <section class="slide">
+      <div class="s-badge">Queue 1</div>
+      <div class="s-head">
+        <div class="s-eyebrow">Queue 1 &middot; The rubric</div>
+        <h2 class="s-title">A worked example</h2>
+        <p class="s-intro">The request: "Pull our Q3 numbers together into something I can send the board on Monday. Keep it short, and flag anything that looks off."</p>
+      </div>
+      <div class="s-body">
+        <div class="cols">
+          <div class="col err"><h4>First attempt, none of these work</h4><ul>
+            <li>The memo is board-ready. <span style="color:var(--mute)">(the whole judgement restated)</span></li>
+            <li>The memo is short and well written. <span style="color:var(--mute)">(bundled, neither half checkable)</span></li>
+            <li>Correctly identifies the Q3 anomalies. <span style="color:var(--mute)">(needs information nobody has)</span></li>
+          </ul></div>
+          <div class="col ok"><h4>Same request, checkable</h4><ul>
+            <li>Provides a document of 500 words or fewer</li>
+            <li>Reports Q3 revenue as $4.18M</li>
+            <li>States that the September figure is provisional</li>
+            <li>Includes sections titled Summary, Q3 performance and Risks</li>
+            <li>Attaches the document as a file rather than pasting it</li>
+          </ul></div>
+        </div>
+      </div>
+      <div class="callout"><b>Notice what happened to the vague words.</b> Short became a word count. Anything that looks off became the one specific thing that was off. Board-ready dissolved into structure, length and format, and no meaning was lost.</div>
+      <div class="s-foot"><span>Queue 1 &middot; Worked example</span><span>Contributor Onboarding</span></div>
+    </section>
+
+    <!-- 18 QUEUE 1 PRE-SUBMIT PASS -->
+    <section class="slide">
+      <div class="s-badge">Queue 1</div>
+      <div class="s-head">
+        <div class="s-eyebrow">Queue 1 &middot; The rubric</div>
+        <h2 class="s-title">The pass to run before you submit</h2>
+        <p class="s-intro">Rubric creation is independently reviewed, so run this first. Work down the list once, in order.</p>
+      </div>
+      <div class="s-body">
+        <div class="cols">
+          <div class="col"><h4>Line by line</h4><ul>
+            <li>Would a perfect, honest response pass this?</li>
+            <li>Would two people reading only the prompt agree?</li>
+            <li>Decidable from the prompt, environment and delivered work alone?</li>
+            <li>About the delivered state, not how the model got there?</li>
+            <li>Names only entities that exist in the universe?</li>
+            <li>One requirement, present tense, positive, product-neutral?</li>
+          </ul></div>
+          <div class="col"><h4>Once, over the whole list</h4><ul>
+            <li>Search for <b>[[</b> : no placeholder survived</li>
+            <li>Paste-check filenames, values and thresholds, including the direction of every inequality</li>
+            <li>Read it as a set: does any pair contradict, or always pass together?</li>
+            <li>Walk the prompt's asks and tick each against its criterion</li>
+            <li>Between 10 and 30 criteria, every weight 1, 2 or 3</li>
+            <li>Sorted by weight, does the order match what matters to this persona?</li>
+          </ul></div>
+        </div>
+      </div>
+      <div class="callout"><b>The one question, asked of every line:</b> could a stranger, holding only the original request and the delivered work, mark this true or false and get the same answer I would?</div>
+      <div class="s-foot"><span>Queue 1 &middot; Pre-submit pass</span><span>Contributor Onboarding</span></div>
+    </section>
+
+    <!-- 19 QUEUE 2 SXS -->
+    <section class="slide">
+      <div class="s-badge">Queue 2</div>
+      <div class="s-head">
+        <div class="s-eyebrow">Queue 2 &middot; SxS</div>
+        <h2 class="s-title">First question: base task or follow-on?</h2>
+        <p class="s-intro">Every task pairs one item against two models. One side is always the base model, Gemini; the other is a comparison model that changes from task to task.</p>
+      </div>
+      <div class="s-body">
+        <div class="cols">
+          <div class="ov-card"><h4><span class="k">Base task</span>Gemini vs. Model X</h4><p>You generate both sides: full trajectory, grading, annotation and ratings for each. You reset twice, once before each model's run.</p><p><b>Reuses nothing.</b></p></div>
+          <div class="ov-card"><h4><span class="k">Follow-on task</span>Gemini vs. a new Model X</h4><p>You generate the new model only. Gemini's trajectory, grades, ratings and links are reused exactly as produced on the base task.</p><p><b>Reuses the base side.</b></p></div>
+        </div>
+      </div>
+      <div class="callout rose"><b>Never touch an existing trajectory.</b> On a follow-on the Gemini side is final: do not re-run, re-grade, re-rate, re-upload, edit or delete it. Two Geminis in one task is the biggest trap; match the version string character for character and screenshot the selector before Turn 1.</div>
+      <div class="s-foot"><span>Queue 2 &middot; SxS</span><span>Contributor Onboarding</span></div>
+    </section>
+
+    <!-- 20 QUEUE 2 STEP BY STEP -->
+    <section class="slide">
+      <div class="s-badge">Queue 2</div>
+      <div class="s-head">
+        <div class="s-eyebrow">Queue 2 &middot; Step by step</div>
+        <h2 class="s-title">Run, capture, grade, rate, compare, in that order</h2>
+      </div>
+      <div class="s-body">
+        <ol class="steps two">
+          <li class="step-item"><span class="step-n">1</span><h5>Confirm the account</h5><p>Match the model named in the task to its account.</p></li>
+          <li class="step-item"><span class="step-n">2</span><h5>Confirm the model + screenshot</h5><p>Selector legible, taken before Turn 1.</p></li>
+          <li class="step-item"><span class="step-n">3</span><h5>Check the starter universe</h5><p>If the task is connector-based.</p></li>
+          <li class="step-item"><span class="step-n">4</span><h5>Rehydrate, then run 20+ turns</h5><p>Opening prompt verbatim as Turn 1.</p></li>
+          <li class="step-item"><span class="step-n">5</span><h5>Record every turn</h5><p>Exact prompt as title &middot; link &middot; files &middot; one key turn.</p></li>
+          <li class="step-item"><span class="step-n">6</span><h5>Submit the final evidence</h5><p>Share link &middot; chat PDF &middot; output artifacts.</p></li>
+          <li class="step-item"><span class="step-n">7</span><h5>Lint acknowledgement</h5><p>Fix what is fixable before acknowledging.</p></li>
+          <li class="step-item"><span class="step-n">8</span><h5>Grade every criterion</h5><p>Pass 1 / fail 0 &middot; never edit the rubric.</p></li>
+          <li class="step-item"><span class="step-n">9</span><h5>Annotate the turns</h5><p>Link each criterion to where it was decided.</p></li>
+          <li class="step-item"><span class="step-n">10</span><h5>Rate the eight dimensions</h5><p>1-5 &middot; 200+ char justification &middot; cite turns.</p></li>
+          <li class="step-item"><span class="step-n">11</span><h5>Record one preference</h5><p>1-7 &middot; read the slot labels every time.</p></li>
+          <li class="step-item"><span class="step-n">12</span><h5>Chat preservation</h5><p>Tick the acknowledgement, then submit.</p></li>
+        </ol>
+      </div>
+      <div class="callout"><b>On the base task you do steps 4 to 11 twice</b>, once per model, with a rehydration between them.</div>
+      <div class="s-foot"><span>Queue 2 &middot; Step by step</span><span>Contributor Onboarding</span></div>
+    </section>
+
+    <!-- 21 QUEUE 2 STEERING -->
+    <section class="slide">
+      <div class="s-badge">Queue 2</div>
+      <div class="s-head">
+        <div class="s-eyebrow">Queue 2 &middot; Steering</div>
+        <h2 class="s-title">Running the trajectory</h2>
+      </div>
+      <div class="s-body">
+        <div class="statrow" style="margin-bottom:14px">
+          <div class="stat-chip"><span class="bignum" style="color:var(--good-ink)">20+</span><span class="lbl">turns is the design target.</span></div>
+          <div class="stat-chip"><span class="bignum" style="color:var(--bad-ink)">&lt; 7</span><span class="lbl">turns fails outright.</span></div>
+        </div>
+        <div class="cols">
+          <div class="col ok"><h4>Good steering</h4><ul>
+            <li>Introduce withheld details as a real user would</li>
+            <li>Correct the model, pivot, follow up</li>
+            <li>Keep going when it struggles, struggling is signal</li>
+            <li>Pursue the same deliverables with both models</li>
+          </ul></div>
+          <div class="col err"><h4>Bad steering</h4><ul>
+            <li>Dumping the whole deliverable list in one turn</li>
+            <li>Nudging the model toward the right answer</li>
+            <li>Padding with re-confirmations, these do not count</li>
+            <li>Abandoning the run because the model is doing badly</li>
+          </ul></div>
+        </div>
+      </div>
+      <div class="callout"><b>Never copy the browser address bar.</b> Always use the product's Share feature. Gemini-family runs need one link per turn; GPT and Claude need only the final link.</div>
+      <div class="s-foot"><span>Queue 2 &middot; Steering</span><span>Contributor Onboarding</span></div>
+    </section>
+
+    <!-- 22 QUEUE 2 SCORING -->
+    <section class="slide">
+      <div class="s-badge">Queue 2</div>
+      <div class="s-head">
+        <div class="s-eyebrow">Queue 2 &middot; Scoring</div>
+        <h2 class="s-title">Grade, annotate, rate, prefer</h2>
+      </div>
+      <div class="s-body">
+        <div class="ov-grid four">
+          <div class="ov-card"><h4>Grade</h4><p>Pass 1 / fail 0 against the frozen rubric. Pass only on evidence in the produced output or a verified side effect. A described intention is a fail; partial satisfaction is a fail.</p></div>
+          <div class="ov-card"><h4>Annotate</h4><p>Link every criterion to the turn where it was decided. Passed: the turn that best demonstrates it. Failed: the turn where it is clearest. Never default to Turn 1.</p></div>
+          <div class="ov-card"><h4>Rate</h4><p>Eight dimensions, 1-5, with evidence. 200+ character justification on every score; cite turns on every 1-4. Safety is Yes/No, not 1-5.</p></div>
+          <div class="ov-card"><h4>Prefer</h4><p>One 1-7 judgement per task. 4 is a tie; 1 and 7 are "much better". Read the slot labels, the order is not fixed. Must agree with your grades and ratings.</p></div>
+        </div>
+      </div>
+      <div class="callout"><b>Exactly one key turn per model, and it is never Turn 1.</b> There is no 40% gate here: grade honestly. 0% and 100% are both legitimate.</div>
+      <div class="s-foot"><span>Queue 2 &middot; Scoring</span><span>Contributor Onboarding</span></div>
+    </section>
+
+    <!-- 23 EVAL SANDBOX -->
+    <section class="slide">
+      <div class="s-badge">Both queues</div>
+      <div class="s-head">
+        <div class="s-eyebrow">Both queues</div>
+        <h2 class="s-title">The eval sandbox: check your own work before you submit</h2>
+        <p class="s-intro">A small IDE with Claude Code inside it. You never open a file or type a task ID; the step labels tell you which command is due and when.</p>
+      </div>
+      <div class="s-body">
+        <table class="dtable">
+          <thead><tr><th class="c-err" style="width:18%">Command</th><th style="width:12%">Queue</th><th style="width:16%">Blocking</th><th>What it looks for</th></tr></thead>
+          <tbody>
+            <tr><td class="c-err">/item</td><td>Q1</td><td><b class="bad">Blocking</b></td><td>Phantom entities, front-loaded prompts, ungradable wording</td></tr>
+            <tr><td class="c-err">/rubric</td><td>Q1</td><td>No</td><td>Writes the rubric for you from the outcomes and GTFA</td></tr>
+            <tr><td class="c-err">/trajectory a</td><td>Q2</td><td><b class="bad">Blocking</b></td><td>Turn count, gaps, missing or duplicated links, padding</td></tr>
+            <tr><td class="c-err">/grading a</td><td>Q2</td><td>No</td><td>Writes the met / not-met grades with turn anchors</td></tr>
+            <tr><td class="c-err">/dimensions a</td><td>Q2</td><td><b class="bad">Blocking</b></td><td>Wrong turns cited, filler justifications, mismatched ratings</td></tr>
+            <tr><td class="c-err">/sxs ab</td><td>Q2</td><td><b class="bad">Blocking</b></td><td>Direction flips, understated strength, contradictions</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout"><b>Snapshot, then Save, every time.</b> It grades to the lowest score, not the average. Until you press both, the result lives only in the sandbox. Scale: 5 PASS &middot; 3 NON-FAIL &middot; 2 FAIL &middot; 1 UNAUDITABLE; one finding at 2 fails the whole command.</div>
+      <div class="s-foot"><span>Both queues &middot; Eval sandbox</span><span>Contributor Onboarding</span></div>
+    </section>
+
+    <!-- 24 BEFORE YOU SUBMIT -->
+    <section class="slide">
+      <div class="s-badge">Checklist</div>
+      <div class="s-head">
+        <div class="s-eyebrow">Before you submit</div>
+        <h2 class="s-title">The checks that fail a task outright</h2>
+        <p class="s-intro">No matter how good the rest of the work is.</p>
+      </div>
+      <div class="s-body">
+        <div class="cols">
+          <div class="col err"><ul>
+            <li>A <b>deleted chat</b>, it kills every share link at once</li>
+            <li><b>Turn 1</b> selected as the key turn</li>
+            <li>Final trajectory link missing, or not a valid public share page</li>
+            <li>An uploaded <b>PDF that contradicts</b> the live share page</li>
+            <li>A browser <b>address-bar URL</b> pasted instead of a Share link</li>
+          </ul></div>
+          <div class="col err"><ul>
+            <li>An existing trajectory <b>modified, re-run or deleted</b></li>
+            <li>Fewer than <b>7 turns</b> in a Queue 2 run</li>
+            <li>An <b>ungrounded entity</b>: a file, person or date not in the universe</li>
+            <li>A named file claimed in the response with <b>no matching upload</b></li>
+            <li>An <b>LLM-written</b> opening prompt</li>
+          </ul></div>
+        </div>
+        <div class="help"><h4>When in doubt</h4>Ask in the War Room before you run, not after. A wrong account, a wrong model or a wrong universe cannot be salvaged once the run has started, and a question costs far less than a rejected task.</div>
+      </div>
+      <div class="s-foot"><span>Before you submit</span><span>Account Hydration &middot; Prompt and Rubrics &middot; SxS &middot; Writing Rubrics</span></div>
+    </section>
+
+  </div>
+</div>
+
+<div class="deck-nav">
+  <button class="nav-btn" id="prev" type="button" aria-label="Previous slide">&#8249;</button>
+  <span class="counter" id="counter">1 / 24</span>
+  <button class="nav-btn" id="next" type="button" aria-label="Next slide">&#8250;</button>
+</div>
+<div class="progress"><span id="bar"></span></div>
+
+<script src="assets/deck.js"></script>
+</body>
+</html>
